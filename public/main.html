@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>반달섬 마리나 큐브</title>
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+    <div class="header-area">
+        <div class="topbar">
+            <div class="topbar_menu">
+                <ul>
+                    <a href="#" id="phone">
+                        <img src="images/phone1.png" style="top:3px;position:relative" height="18" width="18"/>
+                        &nbsp;대표번호 1877-7449
+                    </a>
+                </ul>
+            </div>
+        </div>
+        <div class="header_title_area">
+            <img src="images/banner2.jpg" id="banner1">
+            <div id="header_title">반달섬 마리나 큐브</div>
+        </div>
+        <nav class="header_nav">
+            <ul class="menu_list">
+                <li class="menu" id="menu_1"><a href="#">반달섬 마리나 큐브</a></li>
+                <li class="menu" id="menu_2"><a href="#">사업개요</a></li>
+                <li class="menu" id="menu_3"><a href="#">교통안내</a></li>
+                <li class="menu" id="menu_4"><a href="#">고객접수</a></li>
+                <li class="menu" id="menu_5"><a href="#">평면도</a></li>
+                <li class="menu" id="menu_6"><a href="#">커뮤니티</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="body-area">
+        <div class="main-content"></div>
+    </div>
+    <div class="footer-area"></div>
+</body>
+</html>
+
+<script>
+
+    var allMenu = document.querySelectorAll('.menu');
+    window.onload = function(){
+        allMenu[0].classList.add('active');
+        getContent(allMenu[0].id);
+        for(var i=0; i<allMenu.length; i++){
+            allMenu[i].addEventListener('click', function(){
+                $("li[class='menu active']").attr('class','menu');
+                this.classList.add('active');
+                var menuId = this.id
+                getContent(menuId);
+            })
+        }
+    }
+
+    function getContent(data) {
+        $(".main-content").empty();
+        var data = {'data' : data};
+        data = JSON.stringify(data);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../main/content');
+        xhr.setRequestHeader('Content-Type',"application/json");
+        xhr.send(data);
+
+        xhr.addEventListener('load', function(){
+            if(xhr.responseText){
+                var main_content = document.querySelector('.main-content');
+                main_content.innerHTML = xhr.responseText;
+            }
+        });
+    }
+</script>
