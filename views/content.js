@@ -113,5 +113,69 @@ module.exports = {
                 res.end(html);
             });
         }
+
+        else if(data=='menu_5') {
+            var files = new Array();
+            var imgList = '';
+
+            fs.readdir('./public/images/content5', function(err,fileList){
+                if(fileList.length>0){
+                    for(var j=0; j<fileList.length; j++) {
+                        files.push(fileList[j]);
+                    }
+                }
+            })
+
+            var query = db.query('select * from content5 where name=?', ['content5'], function (err, rows) {
+                if (err) throw err;
+
+                if (rows.length > 0) {
+                    db.query('update content5 set content=?, tag=? where name=?', [files.toString(), 'IMG', 'content5'], function (err2, result) {
+                        if (err2) throw err2
+                        for (var i=0; i<files.length; i++) {
+                            imgList += `<div class="contents" id="content5-${i+1}"><img class="imgList" src="./images/content5/${files[i]}" style="width:100%"/></div>`;
+                        }
+                        var html = `${imgList}`;
+                        res.end(html);
+                    })
+                } else {
+                    db.query('insert into content5 (content,tag,name) values (?,?,?)', [files.toString(), 'IMG', 'content5'], function (err2, result) {
+                        if (err2) throw err2
+                    })
+                }
+            });
+        }
+
+        else if(data=='menu_6') {
+            var files = new Array();
+            var imgList = '';
+
+            fs.readdir('./public/images/content6', function(err,fileList){
+                if(fileList.length>0){
+                    for(var j=0; j<fileList.length; j++) {
+                        files.push(fileList[j]);
+                    }
+                }
+            })
+
+            var query = db.query('select * from content6 where name=?', ['content6'], function (err, rows) {
+                if (err) throw err;
+
+                if (rows.length > 0) {
+                    db.query('update content6 set content=?, tag=? where name=?', [files.toString(), 'IMG', 'content6'], function (err2, result) {
+                        if (err2) throw err2
+                        for (var i=0; i<files.length; i++) {
+                            imgList += `<div class="contents" id="content6-${i+1}"><img class="imgList" src="./images/content6/${files[i]}" style="width:100%"/></div>`;
+                        }
+                        var html = `${imgList}`;
+                        res.end(html);
+                    })
+                } else {
+                    db.query('insert into content6 (content,tag,name) values (?,?,?)', [files.toString(), 'IMG', 'content6'], function (err2, result) {
+                        if (err2) throw err2
+                    })
+                }
+            });
+        }
     }
 }

@@ -206,6 +206,7 @@ ul {
 .contents.editable, .editContent {
     box-shadow: 3px 3px 3px;
     background-color: #f6f6f6;
+    padding-top: 20px;
 }
 
 .editContent{

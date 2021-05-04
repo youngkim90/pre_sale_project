@@ -23,7 +23,7 @@ router.post('/update', function(req,res){
     var num = req.body.num;
     var tag = req.body.tag;
     var menu = num.split("-")[0];
-    if(menu=='content3'){
+    if(menu==('content3') || menu==('content5') || menu==('content6')){
         num = menu;
     }
     if(data.indexOf('\r\n')!=-1){
