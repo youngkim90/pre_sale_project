@@ -45,5 +45,4 @@ router.post('/', passport.authenticate('local-join', {
     failureRedirect: '/join',
     failureFlash: true })
 )
-
 module.exports = router;

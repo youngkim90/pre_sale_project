@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 .header-area {
     width: 100%;
     position: relative;
@@ -19,14 +23,14 @@
     list-style: none;
     display: -webkit-box;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 500px;
 }
 .header_nav {
     display: block;
     margin: 0 auto;
     color: #FFFFFF;
-    background-color: seagreen;
-    border-bottom: 5px solid mediumseagreen;
+    background-color: rgb(33,89,104);
+    border-bottom: 5px solid rgb(46,125,146);
 }
 .menu {
     display: block;
@@ -37,12 +41,12 @@
 }
 
 .active{
-    background-color: mediumseagreen;
+    background-color: rgb(46,125,146);
 }
 
 .menu a {
     display: block;
-    padding: 13px;
+    padding: 10px 15px 10px 15px;
     color: inherit;
     outline: none;
     text-decoration: none;
@@ -56,14 +60,16 @@
 }
 .header_title_area {
     width: 100%;
-    height: 150px;
+    height: 120px;
+    margin-top: 25px;
 }
 #header_title{
     position: absolute;
-    left: 50px;
-    top: 45px;
+    left: 200px;
+    top: 42px;
     font-size: 30px;
-    color: seagreen;
+    color: rgb(33,89,104);
+    font-weight: 550;
 }
 #menu_1 {
     border-left: 1px solid white;
@@ -72,13 +78,13 @@
     width: 100%;
     height: 35px;
     color: #FFFFFF;
-    background-color: mediumseagreen;
+    background-color: rgb(46,125,146);
 }
 .topbar_menu {
     width :500px;
     color: inherit;
     position: relative;
-    left: 100px;
+    left: 200px;
 }
 .topbar_menu ul {
     margin: 0;
@@ -111,11 +117,103 @@
 }
 .main-content {
     text-align: center;
-    max-width: 1200px;
+    max-width: 1100px;
 }
 .contents {
     margin-bottom: 20px;
 }
 .contents img {
     max-width: 100%;
+}
+.main-content h1, .main-content h2 {
+    color: rgb(33,89,104);
+    font-weight: normal;
+}
+.slideImg, imgList{
+    width: 1000px;
+}
+.slide {
+    overflow: hidden;
+}
+.slide ul {
+    width:calc(100% * 5);
+    display:flex;
+    animation:slide 16s infinite;
+}
+ul {
+    list-style:none;
+}
+.slide li{
+    width:calc(100% / 5);
+    margin-right: -10px;
+}
+@keyframes slide {
+    0% {margin-left:0;} /* 0 ~ 10  : 정지 */
+    10% {margin-left:0;} /* 10 ~ 25 : 변이 */
+    25% {margin-left:-100%;} /* 25 ~ 35 : 정지 */
+    35% {margin-left:-100%;} /* 35 ~ 50 : 변이 */
+    50% {margin-left:-200%;}
+    60% {margin-left:-200%;}
+    75% {margin-left:-300%;}
+    85% {margin-left:-300%;}
+    100% {margin-left:0;}
+}
+/*.left{*/
+/*    position: relative;*/
+/*    width: 30px;*/
+/*    top: 400px;*/
+/*    left: -380px;*/
+/*    display: inline-block;*/
+/*}*/
+/*.right{*/
+/*    position: relative;*/
+/*    width: 30px;*/
+/*    top: 400px;*/
+/*    right: -420px;*/
+/*    display: inline-block;*/
+/*}*/
+.is-paused ul{
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+    -o-animation-play-state:paused;
+    animation-play-state:paused;
+}
+
+.btn_group {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    top:-10px;
+    float: right;
+}
+
+.btn_group button, .btn_div button{
+    border: 1px solid #267448;
+    background-color: rgba(0,0,0,0);
+    color: #267448;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 2px 5px 2px 5px;
+}
+
+.btn_group button:hover, .btn_div button:hover{
+    border: 2px solid #267448;
+    background-color: #e8e8e8;
+    font-weight: bold;
+}
+
+.contents.editable, .editContent {
+    box-shadow: 3px 3px 3px;
+    background-color: #f6f6f6;
+}
+
+.editContent{
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 2px solid #3aac6d;
+}
+
+.editContent:focus {
+    outline: none;
 }

@@ -15,7 +15,7 @@
             <div class="topbar_menu">
                 <ul>
                     <a href="#" id="phone">
-                        <img src="images/phone1.png" style="top:3px;position:relative" height="18" width="18"/>
+                        <img src="images/phone1.png" style="top:2px;position:relative" height="16" width="16"/>
                         &nbsp;대표번호 1877-7449
                     </a>
                 </ul>
@@ -27,17 +27,19 @@
         </div>
         <nav class="header_nav">
             <ul class="menu_list">
-                <li class="menu" id="menu_1"><a href="#">반달섬 마리나 큐브</a></li>
-                <li class="menu" id="menu_2"><a href="#">사업개요</a></li>
-                <li class="menu" id="menu_3"><a href="#">교통안내</a></li>
-                <li class="menu" id="menu_4"><a href="#">고객접수</a></li>
-                <li class="menu" id="menu_5"><a href="#">평면도</a></li>
-                <li class="menu" id="menu_6"><a href="#">커뮤니티</a></li>
+                <li class="menu" id="menu_1"><a href="javascript:void(0)">반달섬 마리나 큐브</a></li>
+                <li class="menu" id="menu_2"><a href="javascript:void(0)">사업개요</a></li>
+                <li class="menu" id="menu_3"><a href="javascript:void(0)">교통안내</a></li>
+                <li class="menu" id="menu_4"><a href="javascript:void(0)">고객접수</a></li>
+                <li class="menu" id="menu_5"><a href="javascript:void(0)">평면도</a></li>
+                <li class="menu" id="menu_6"><a href="javascript:void(0)">커뮤니티</a></li>
             </ul>
         </nav>
     </div>
     <div class="body-area">
-        <div class="main-content"></div>
+        <div class="main-content">
+
+        </div>
     </div>
     <div class="footer-area"></div>
 </body>
@@ -72,6 +74,129 @@
             if(xhr.responseText){
                 var main_content = document.querySelector('.main-content');
                 main_content.innerHTML = xhr.responseText;
+                $(".slide").mouseover(function(){
+                    $(".slide").attr('class','slide is-paused');
+                });
+                $(".slide").mouseout(function(){
+                    $(".slide").attr('class','slide');
+                });
+                $(".contents").mouseover(function(){
+                    if($(".btn_group").length==0 && $(".editForm").length==0){
+                        var parent = this;
+                        parent.setAttribute('class', 'contents editable');
+                        var div = document.createElement('div');
+                        var btn = document.createElement('button');
+                        btn.textContent = '수정';
+                        btn.className = 'edit'
+                        div.className = 'btn_group';
+                        div.appendChild(btn);
+                        parent.prepend(div);
+
+                        div.addEventListener('click',function(event){
+                            div.remove();
+                            var parent = event.path[2];
+                            var content = parent.children[0];
+                            parent.className = 'contents editMode';
+                            var editForm = document.createElement('form');
+                            editForm.className = 'editForm';
+                            editForm.setAttribute('action','/main/update');
+                            editForm.setAttribute('method','POST');
+
+                            var update = '';
+                            var tag = '';
+                            var num = '';
+                            if(content.tagName=='DIV'){
+                                if(content.className!=null && content.className=='slide'){
+                                    var imgList = $('.slide').children().children().children();
+                                    var srcList =''
+                                    for(var i=0; i<imgList.length; i++){
+                                        if(imgList.length-1 == i){
+                                            srcList = srcList + imgList[i].getAttribute('src')
+                                        } else {
+                                            srcList = srcList + imgList[i].getAttribute('src') + ',';
+                                        }
+                                    }
+                                    var update = document.createElement('input');
+                                    update.setAttribute('type','hidden');
+                                    update.setAttribute('name','editData');
+                                    update.setAttribute('value',srcList);
+                                    var tag = document.createElement('input');
+                                    tag.setAttribute('type','hidden');
+                                    tag.setAttribute('name','tag');
+                                    tag.setAttribute('value','IMG');
+                                    var num = document.createElement('input');
+                                    num.setAttribute('type','hidden');
+                                    num.setAttribute('name','num');
+                                    num.setAttribute('value',parent.id);
+                                }
+                            } else if(content.tagName=='IMG'){
+                                var imgSrc = content.getAttribute('src');
+                                var update = document.createElement('input');
+                                update.setAttribute('type','hidden');
+                                update.setAttribute('name','editData');
+                                update.setAttribute('value',imgSrc);
+                                var tag = document.createElement('input');
+                                tag.setAttribute('type','hidden');
+                                tag.setAttribute('name','tag');
+                                tag.setAttribute('value','IMG');
+                                var num = document.createElement('input');
+                                num.setAttribute('type','hidden');
+                                num.setAttribute('name','num');
+                                num.setAttribute('value',parent.id);
+                            } else {
+                                var update = document.createElement('textarea');
+                                var num = document.createElement('input');
+                                num.setAttribute('type','hidden');
+                                num.setAttribute('name','num');
+                                num.setAttribute('value',parent.id);
+                                var tag = document.createElement('input');
+                                tag.setAttribute('type','hidden');
+                                tag.setAttribute('name','tag');
+                                tag.setAttribute('value',content.tagName);
+                                //편집모드 전환, textarea 생성
+                                update.setAttribute('rows','3');
+                                update.setAttribute('cols','120');
+                                update.setAttribute('name','editData');
+                                update.textContent = content.textContent;
+                                update.className = "editContent";
+                                content.style.display = 'none';
+                            }
+                            //form에 추가
+                            editForm.appendChild(update);
+                            editForm.appendChild(num);
+                            editForm.appendChild(tag);
+                            parent.appendChild(editForm);
+                            //submit 버튼 추가
+                            var divBtn = document.createElement('div');
+                            divBtn.className = 'btn_div';
+                            var submitBtn = document.createElement('button');
+                            submitBtn.textContent = '확인';
+                            submitBtn.className = 'submit';
+                            divBtn.appendChild(submitBtn);
+                            editForm.appendChild(divBtn);
+
+                        })
+                    }
+                });
+                $(".contents").mouseout(function(event){
+                    if(event.toElement.className!=null && (event.toElement.className=='btn_group' || event.toElement.className=='edit')) {
+                    } else {
+                        this.setAttribute('class','contents');
+                        if($(".btn_group")){
+                            $(".btn_group").remove();
+                        }
+                    }
+                });
+
+                // $(".left").mouseup(function(){
+                //     $(".leftButton").attr('src','./images/leftButton.png');
+                // });
+                // $(".right").mousedown(function(){
+                //     $(".rightButton").attr('src','./images/rightButton_click.png');
+                // });
+                // $(".right").mouseup(function(){
+                //     $(".rightButton").attr('src','./images/rightButton.png');
+                // });
             }
         });
     }
