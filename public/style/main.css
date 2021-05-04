@@ -55,8 +55,8 @@ body {
 }
 
 .menu a:hover {
-    color: greenyellow;
-    text-shadow: 1px 1px 2px lightgrey;
+    color: #b0fd39;
+    text-shadow: 1px 1px 2px #c6c6c6;
 }
 .header_title_area {
     width: 100%;
@@ -121,6 +121,7 @@ body {
 }
 .contents {
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 .contents img {
     max-width: 100%;
@@ -136,7 +137,7 @@ body {
     overflow: hidden;
 }
 .slide ul {
-    width:calc(100% * 5);
+    /*width:calc(100% * 5);*/
     display:flex;
     animation:slide 16s infinite;
 }
@@ -144,7 +145,7 @@ ul {
     list-style:none;
 }
 .slide li{
-    width:calc(100% / 5);
+    /*width:calc(100% / 5);*/
     margin-right: -10px;
 }
 @keyframes slide {

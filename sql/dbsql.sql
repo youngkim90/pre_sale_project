@@ -62,4 +62,6 @@ insert into content1 (tag, content, name) values ('H2', '대표번호 1877-7449'
 insert into content1 (tag, content, name) values ('IMG', './images/slide/cont1-1.png,./images/slide/cont1-2.png,./images/slide/cont1-3.png,./images/slide/cont1-4.png,./images/slide/cont1-5.png', 'content1-4');
 insert into content1 (tag, content, name) values ('IMG', './images/content1/cont2.png', 'content1-5');
 insert into content2 (content, name, tag) values ('사업개요.png','content2-1','IMG');
-insert into content3 (content, name, tag) values ('교통0.png','content3-1','IMG');
+insert into content3 (content, name, tag) values ('교통0.png','content3','IMG');
+insert into content4 (tag, content, name) values ('H1', '고객접수','content4-1');
+insert into content4 (tag, content, name) values ('H2', '상담문의 신청시 즉시 답변드립니다.', 'content4-2');
