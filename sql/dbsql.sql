@@ -56,6 +56,20 @@ create table content6(
     tag varchar(20) null,
     primary key(id));
 
+create table content7(
+    id int(11) not null auto_increment,
+    name varchar(20) null,
+    content varchar(1000) null,
+    tag varchar(20) null,
+    primary key(id));
+
+create table test(
+    id int(11) not null auto_increment,
+    name varchar(20) null,
+    content varchar(1000) null,
+    tag varchar(20) null,
+    primary key(id));
+
 insert into content1 (tag, content, name) values ('H1', '반달섬 마리나 큐브','content1-1');
 insert into content1 (tag, content, name) values ('H2', '상담문의 신청시 즉시 답변드립니다.', 'content1-2');
 insert into content1 (tag, content, name) values ('H2', '대표번호 1877-7449', 'content1-3');
@@ -67,3 +81,4 @@ insert into content4 (tag, content, name) values ('H1', '고객접수','content4
 insert into content4 (tag, content, name) values ('H2', '상담문의 신청시 즉시 답변드립니다.', 'content4-2');
 insert into content5 (content, name, tag) values ('평면도A.png','content5','IMG');
 insert into content6 (content, name, tag) values ('커뮤니티1.png','content6','IMG');
+insert into content7 (content, name, tag) values ('주변입지0.png','content7','IMG');

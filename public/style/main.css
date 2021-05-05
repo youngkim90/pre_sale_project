@@ -10,14 +10,19 @@ body {
     padding: 0;
 
 }
+
 .body-area {
     width: 100%;
     height: auto;
 }
+
 .footer-area {
     width: 100%;
-    height: auto;
+    height: 60px;
+    background-color: rgb(33,89,104);
+    border-top: 5px solid rgb(48, 131, 153);
 }
+
 .menu_list {
     padding-left: 0;
     list-style: none;
@@ -25,13 +30,15 @@ body {
     max-width: 600px;
     margin: 0 500px;
 }
+
 .header_nav {
     display: block;
     margin: 0 auto;
     color: #FFFFFF;
     background-color: rgb(33,89,104);
-    border-bottom: 5px solid rgb(46,125,146);
+    border-bottom: 5px solid rgb(48, 131, 153);
 }
+
 .menu {
     display: block;
     float: left;
@@ -41,7 +48,7 @@ body {
 }
 
 .active{
-    background-color: rgb(46,125,146);
+    background-color: rgb(48, 131, 153);
 }
 
 .menu a {
@@ -58,11 +65,13 @@ body {
     color: #b0fd39;
     text-shadow: 1px 1px 2px #c6c6c6;
 }
+
 .header_title_area {
     width: 100%;
     height: 120px;
     margin-top: 25px;
 }
+
 #header_title{
     position: absolute;
     left: 200px;
@@ -71,26 +80,31 @@ body {
     color: rgb(33,89,104);
     font-weight: 550;
 }
+
 #menu_1 {
     border-left: 1px solid white;
 }
+
 .topbar {
     width: 100%;
     height: 35px;
     color: #FFFFFF;
-    background-color: rgb(46,125,146);
+    background-color: rgb(48, 131, 153);
 }
+
 .topbar_menu {
     width :500px;
     color: inherit;
     position: relative;
     left: 200px;
 }
+
 .topbar_menu ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
+
 #phone {
     position: relative;
     outline: none;
@@ -100,9 +114,11 @@ body {
     top: 4px;
     font-weight: bold;
 }
+
 #phone:hover {
     color: aquamarine;
 }
+
 #banner1 {
     position: relative;
     width: 70%;
@@ -114,40 +130,51 @@ body {
 .body-area {
     display: flex;
     justify-content: center;
+    min-height: 600px;
 }
+
 .main-content {
     text-align: center;
     max-width: 1100px;
 }
+
 .contents {
     margin-bottom: 20px;
     margin-top: 20px;
 }
+
 .contents img {
     max-width: 100%;
 }
+
 .main-content h1, .main-content h2 {
     color: rgb(33,89,104);
     font-weight: normal;
 }
+
 .slideImg, imgList{
     width: 1000px;
 }
+
 .slide {
     overflow: hidden;
 }
+
 .slide ul {
     /*width:calc(100% * 5);*/
     display:flex;
     animation:slide 16s infinite;
 }
+
 ul {
     list-style:none;
 }
+
 .slide li{
     /*width:calc(100% / 5);*/
     margin-right: -10px;
 }
+
 @keyframes slide {
     0% {margin-left:0;} /* 0 ~ 10  : 정지 */
     10% {margin-left:0;} /* 10 ~ 25 : 변이 */
@@ -159,20 +186,7 @@ ul {
     85% {margin-left:-300%;}
     100% {margin-left:0;}
 }
-/*.left{*/
-/*    position: relative;*/
-/*    width: 30px;*/
-/*    top: 400px;*/
-/*    left: -380px;*/
-/*    display: inline-block;*/
-/*}*/
-/*.right{*/
-/*    position: relative;*/
-/*    width: 30px;*/
-/*    top: 400px;*/
-/*    right: -420px;*/
-/*    display: inline-block;*/
-/*}*/
+
 .is-paused ul{
     -webkit-animation-play-state:paused;
     -moz-animation-play-state:paused;
@@ -206,7 +220,7 @@ ul {
 .contents.editable, .editContent {
     box-shadow: 3px 3px 3px;
     background-color: #f6f6f6;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .editContent{
@@ -218,4 +232,9 @@ ul {
 
 .editContent:focus {
     outline: none;
+}
+
+.addCont, .addImg, .addText {
+    cursor: pointer;
+    margin: 10px;
 }

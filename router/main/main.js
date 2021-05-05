@@ -12,9 +12,14 @@ router.get('/', function(req,res){
 router.post('/content', function(req,res){
     if(req.body){
         var data = req.body.data;
-        content.content1(data, res);
-        // console.log('response  '+ responseData)
-        // res.end(responseData);
+        if(data=='menu_1') content.content1(data, res);
+        else if(data=='menu_2') content.content2(data, res);
+        else if(data=='menu_3') content.content3(data, res);
+        else if(data=='menu_4') content.content4(data, res);
+        else if(data=='menu_5') content.content5(data, res);
+        else if(data=='menu_6') content.content6(data, res);
+        else if(data=='menu_7') content.content7(data, res);
+        else if(data=='test') content.test(data, res);
     }
 })
 
@@ -23,7 +28,7 @@ router.post('/update', function(req,res){
     var num = req.body.num;
     var tag = req.body.tag;
     var menu = num.split("-")[0];
-    if(menu==('content3') || menu==('content5') || menu==('content6')){
+    if(menu==('content3') || menu==('content5') || menu==('content6') || menu==('content7')){
         num = menu;
     }
     if(data.indexOf('\r\n')!=-1){
