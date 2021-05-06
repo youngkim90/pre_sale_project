@@ -1,11 +1,11 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
-var cors = require('cors');
-var passport = require('passport');
-var session = require('express-session');
-var flash = require('connect-flash');
-var router = require('./router/index');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const cors = require('cors');
+const passport = require('passport');
+const session = require('express-session');
+const flash = require('connect-flash');
+const router = require('./router/index');
 
 app.listen(3000, function(){
 })

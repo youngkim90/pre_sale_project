@@ -238,3 +238,7 @@ ul {
     cursor: pointer;
     margin: 10px;
 }
+
+.uploadForm{
+    margin-top: 20px;
+}

@@ -1,8 +1,8 @@
-var express = require('express');
-var router =express.Router();
-var path = require('path');
-var main = require('./main/main');
-var join = require('./join/join');
+const express = require('express');
+const router =express.Router();
+const path = require('path');
+const main = require('./main/main');
+const join = require('./join/join');
 
 router.get('/', function(req,res){
     res.sendFile(path.join(__dirname,'../public/main.html'));

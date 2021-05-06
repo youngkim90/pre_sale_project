@@ -1,7 +1,7 @@
-var mysql = require('mysql');
-var sync_mysql = require('sync-mysql');
+const mysql = require('mysql');
+const sync_mysql = require('sync-mysql');
 
-var db = mysql.createConnection({
+const db = mysql.createConnection({
     host : 'localhost',
     port : '3306',
     user : 'admin_user',
