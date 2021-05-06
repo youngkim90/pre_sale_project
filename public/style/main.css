@@ -241,4 +241,13 @@ ul {
 
 .uploadForm{
     margin-top: 20px;
+    display: inline;
+}
+.emptyContents.show {
+    border: 1px solid grey;
+    border-radius: 10px;
+    min-height: 40px;
+}
+.emptyContents.hide {
+    height: 10px;
 }

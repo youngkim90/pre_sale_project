@@ -134,22 +134,53 @@ module.exports = {
     },
 
     test:function(data,res) {
-        const query = db.query('select * from test', function (err, rows) {
+        const query = db.query(`select * from ${data}`, function (err, rows) {
             if(err) throw err;
             if(rows.length==0){
                 res.end();
-            }
-        });
-    },
-
-    upload:function(data, res) {
-        const query = db.query('select * from test', function (err, rows) {
-            if(err) throw err;
-            if(rows.length==0){
-                res.end();
+            } else {
+                var html = '';
+                const sortRows = sortWithName(rows)
+                // const num = data.substring(data.length-1,data.length);
+                for(var i=0; i<sortRows.length; i++){
+                    const tag = sortRows[i].tag;
+                    const content = sortRows[i].content;
+                    const rowName = sortRows[i].name;
+                    const row = getContentHTML(rowName, content, tag);
+                    html+=row;
+                }
+                res.end(html);
             }
         });
     }
+}
+
+function sortWithName(data){
+    var rows = data;
+    rows.sort(function (a, b) {
+        const numA = a.name.slice(9);
+        const numB = b.name.slice(9);
+        return numA < numB ? -1 : numA > numB ? 1 : 0;
+    });
+    return rows;
+}
+
+function getContentHTML(rowId, content, tag){
+    var html = `<div class="contents" id="${rowId}">`;
+    if(tag=='H1'){
+        html+=`<h1>${content}</h1>`
+    }
+    else if(tag=='H2'){
+        html+=`<h2>${content}</h2>`
+    }
+    else if(tag=='H3'){
+        html+=`<h3>${content}</h3>`
+    } else {
+        const menu = rowId.split("-")[0];
+        html+=`<img class="imgList" src="./images/${menu}/${content}" style="width:100%"/>`
+    }
+    html += '</div>';
+    return html;
 }
 
 function getImageHTML(menu, imgList){

@@ -63,12 +63,13 @@ create table content7(
     tag varchar(20) null,
     primary key(id));
 
-create table test(
+create table content8(
     id int(11) not null auto_increment,
     name varchar(20) null,
     content varchar(1000) null,
     tag varchar(20) null,
     primary key(id));
+
 
 insert into content1 (tag, content, name) values ('H1', '반달섬 마리나 큐브','content1-1');
 insert into content1 (tag, content, name) values ('H2', '상담문의 신청시 즉시 답변드립니다.', 'content1-2');

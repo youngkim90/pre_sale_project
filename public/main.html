@@ -149,10 +149,11 @@
                             }
                         }
                     });
+                    addEmptyContent();
                 } else {
                     // const conNum = data.split("_")[1];
                     const conNum = '8';
-                    const contentsDiv = $("<div>").attr({class:'emptyContents',id:`empty${conNum}-1`});
+                    const contentsDiv = $("<div>").attr({class:'emptyContents show',id:`empty${conNum}-1`});
                     const addCont = $("<img>").attr({class:'addCont',src:'./images/추가.png'}).appendTo(contentsDiv);
                     contentsDiv.appendTo($(".main-content"));
 
@@ -161,41 +162,102 @@
                     })
                     addCont.on('click', function(event){
                         const parent = this.parentElement;
-                        const menu = parent.id.split("-")[0];
-                        addCont.remove();
-                        const addImg = $("<img>").attr({class:'addImg',src:'./images/이미지.png',style:'width:100px;'}).appendTo(parent);
-                        const addText = $("<img>").attr({class:'addText',src:'./images/글.png',style:'width:52px;'}).appendTo(parent);
-                        addImg.on('mousedown', function(event){
-                            this.setAttribute('src','./images/이미지_클릭.png');
-                        })
-                        addImg.on('click', function(event){
-                            const parent = this.parentElement;
-                            this.remove();
-                            const num = parent.id.split("-")[1];
-                            const folder = 'content'+ $("li[class='menu active']")[0].id.split("_")[1];
-                            $(".addText").remove();
-                            const uploadForm = $("<form>").attr({class:'uploadForm',action:'/main/upload',encType:'multipart/form-data',method:'POST'});
-                            $("<input>").attr({type:'hidden', name:'folder', value:folder}).appendTo(uploadForm);
-                            $("<input>").attr({type:'hidden', name:'num', value:num}).appendTo(uploadForm);
-                            $("<input>").attr({type:'file',name:'content_img',accept:'image/jpg,image/png,image/jpeg'}).appendTo(uploadForm);
-                            $("<input>").attr({type:'submit'}).appendTo(uploadForm);
-                            uploadForm.appendTo(parent);
-                        })
+                        uploadContents(parent);
                     })
                 }
             });
         }
 
-        function sendAjax(url, data, parent){
-            var xhr = new XMLHttpRequest();
-            data = JSON.stringify(data);
+        function addEmptyContent(){
+            const contentDiv = $("div.contents");
+            for(var i=0; i<contentDiv.length; i++){
+                const emptyId = 'empty' + contentDiv[i].id.substring(7,contentDiv[i].id.length)
+                const emptyDiv = $("<div>").attr({class:'emptyContents hide',id: emptyId});
+                contentDiv[i].after(emptyDiv[0]);
+                emptyDiv.on('mouseover', function(event) {
+                    if($(".editContent").length==0) {
+                        this.setAttribute('class', 'emptyContents show');
+                        if (this.children.length == 0) {
+                            const addCont = $("<img>").attr({class: 'addCont', src: './images/추가.png'}).appendTo(this);
+                            addCont.on('mousedown', function (event) {
+                                addCont.attr('src', './images/추가_클릭.png');
+                            })
+                            addCont.on('click', function (event) {
+                                uploadContents(emptyDiv[0]);
+                            });
+                        }
+                    }
+                });
+                emptyDiv.on('mouseleave', function(event) {
+                    // if(event.toElement.className!=null && (event.toElement.className=='body-area')) {
+                    if($(".editContent").length==0){
+                        this.setAttribute('class', 'emptyContents hide');
+                        const childs = this.children;
+                        for(var j=0; j<childs.length; j++){
+                            childs[j].remove();
+                            j--;
+                        }
+                    }
+                    // }
+                });
+            }
+        }
 
-            xhr.open('POST', url);
-            xhr.setRequestHeader('Content-Type',"application/json");
-            xhr.send(data);
+        function uploadContents(parent){
+            const menu = parent.id.split("-")[0];
+            parent.children[0].remove();
+            const addImg = $("<img>").attr({class:'addImg',src:'./images/이미지.png',style:'width:100px;'}).appendTo(parent);
+            const addText = $("<img>").attr({class:'addText',src:'./images/글.png',style:'width:52px;'}).appendTo(parent);
+            addImg.on('mousedown', function(event){
+                this.setAttribute('src','./images/이미지_클릭.png');
+            })
+            addText.on('mousedown', function(event){
+                this.setAttribute('src','./images/글_클릭.png');
+            })
+            addImg.on('click', function(event){
+                const parent = this.parentElement;
+               this.remove();
+                $(".addText").remove();
+                const num = parent.id.split("-")[1];
+                const folder = 'content'+ $("li[class='menu active']")[0].id.split("_")[1];
+                const uploadForm = $("<form>").attr({class:'uploadForm',action:'/main/upload',encType:'multipart/form-data',method:'POST'});
+                $("<input>").attr({type:'hidden', name:'folder', value:folder}).appendTo(uploadForm);
+                $("<input>").attr({type:'hidden', name:'num', value:num}).appendTo(uploadForm);
+                $("<input>").attr({type:'file',name:'content_img',accept:'image/jpg,image/png,image/jpeg'}).appendTo(uploadForm);
+                var submitBtn = $("<input>").attr({type:'submit'});
+                uploadForm.appendTo(parent);
+                submitBtn.appendTo(parent);
 
-            xhr.addEventListener('load', function(){
-                parent.innerHTML = xhr.responseText;
+                submitBtn.on('click', function(event){
+                    var formData = new FormData($(".uploadForm")[0]);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST" , "/main/upload" );
+                    xhr.send(formData);
+
+                    xhr.addEventListener('load', function(){
+                        const main_content = document.querySelector('.main-content');
+                        main_content.innerHTML = xhr.responseText;
+                    });
+                });
+            })
+            addText.on('click', function(event){
+                const parent = this.parentElement;
+                parent.className = 'emptyContents';
+                parent.style.height = 'auto';
+                const contentName = 'content'+parent.id.substring(5,parent.id.length)
+                this.remove();
+                $(".addImg").remove();
+                const editForm = $("<form>").attr({class:'editForm',action:'/main/update', method:'POST'});
+                $("<textarea>").attr({class:'editContent',rows:'3',cols:'100',name:'editData'}).appendTo(editForm);
+                $("<input>").attr({type:'hidden', name:'num', value:contentName}).appendTo(editForm);
+                $("<input>").attr({type:'hidden', name:'tag', value:'H1'}).appendTo(editForm);
+                //form에 추가
+                editForm.appendTo(parent);
+                //submit 버튼 추가
+                const divBtn = $("<div>").attr('class', 'btn_div');
+                const submitBtn = $("<button>").attr('class','submit').text('확인');
+                submitBtn.appendTo(divBtn);
+                divBtn.appendTo(editForm);
             });
         }
     </script>
