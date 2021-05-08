@@ -72,133 +72,43 @@
             xhr.send(data);
 
             xhr.addEventListener('load', function(){
-                if(xhr.responseText){
+                if(xhr.responseText!='nodata'){
                     const main_content = document.querySelector('.main-content');
                     main_content.innerHTML = xhr.responseText;
-                    $(".slide").mouseover(function(){
-                        $(".slide").attr('class','slide is-paused');
-                    });
-                    $(".slide").mouseout(function(){
-                        $(".slide").attr('class','slide');
-                    });
-                    $(".contents").mouseover(function(){
-                        if($(".btn_group").length==0 && $(".editForm").length==0){
-                            const parent = this;
-                            parent.setAttribute('class', 'contents editable');
-                            const div = $("<div>").attr('class','btn_group');
-                            const btn = $("<button>").attr('class','edit').text('수정');
-                            btn.appendTo(div);
-                            div.prependTo(parent);
-
-                            div[0].addEventListener('click',function(event){
-                                div[0].remove();
-                                const parent = event.path[2];
-                                const content = parent.children[0];
-                                parent.className = 'contents editMode';
-                                const editForm = $("<form>").attr({class:'editForm',action:'/main/update', method:'POST'});
-                                var update = '';
-                                var tag = '';
-                                var num = '';
-                                if(content.tagName=='DIV'){
-                                    if(content.className!=null && content.className=='slide'){
-                                        const imgList = $('.slide').children().children().children();
-                                        var srcList =''
-                                        for(var i=0; i<imgList.length; i++){
-                                            if(imgList.length-1 == i){
-                                                srcList = srcList + imgList[i].getAttribute('src')
-                                            } else {
-                                                srcList = srcList + imgList[i].getAttribute('src') + ',';
-                                            }
-                                        }
-                                        update = $("<input>").attr({type:'hidden', name:'editData', value:srcList});
-                                        tag = $("<input>").attr({type:'hidden', name:'tag', value:'IMG'});
-                                        num = $("<input>").attr({type:'hidden', name:'num', value:parent.id});
-                                    }
-                                } else if(content.tagName=='IMG'){
-                                    const imgSrc = content.getAttribute('src');
-                                    update = $("<input>").attr({type:'hidden', name:'editData', value:imgSrc});
-                                    tag = $("<input>").attr({type:'hidden', name:'tag', value:'IMG'});
-                                    num = $("<input>").attr({type:'hidden', name:'num', value:parent.id});
-                                } else {
-                                    content.style.display = 'none';
-                                    //편집모드 전환, textarea 생성
-                                    update = $("<textarea>").attr({class:'editContent',rows:'3',cols:'120',name:'editData'})
-                                    update.html(content.innerHTML.replaceAll("<br>","\n"));
-                                    num = $("<input>").attr({type:'hidden', name:'num', value:parent.id});
-                                    tag = $("<input>").attr({type:'hidden', name:'tag', value:content.tagName});
-                                }
-                                //form에 추가
-                                update.appendTo(editForm);
-                                num.appendTo(editForm);
-                                tag.appendTo(editForm);
-                                editForm.appendTo(parent);
-                                //submit 버튼 추가
-                                const divBtn = $("<div>").attr('class', 'btn_div');
-                                const submitBtn = $("<button>").attr('class','submit').text('확인');
-                                submitBtn.appendTo(divBtn);
-                                divBtn.appendTo(editForm);
-                            })
-                        }
-                    });
-                    $(".contents").mouseout(function(event){
-                        if(event.toElement.className!=null && (event.toElement.className=='btn_group' || event.toElement.className=='edit')) {
-                        } else {
-                            this.setAttribute('class','contents');
-                            if($(".btn_group")){
-                                $(".btn_group").remove();
-                            }
-                        }
-                    });
-                    addEmptyContent();
-                } else {
-                    // const conNum = data.split("_")[1];
-                    const conNum = '8';
-                    const contentsDiv = $("<div>").attr({class:'emptyContents show',id:`empty${conNum}-1`});
-                    const addCont = $("<img>").attr({class:'addCont',src:'./images/추가.png'}).appendTo(contentsDiv);
-                    contentsDiv.appendTo($(".main-content"));
-
-                    addCont.on('mousedown', function(event){
-                        addCont.attr('src','./images/추가_클릭.png');
-                    })
-                    addCont.on('click', function(event){
-                        const parent = this.parentElement;
-                        uploadContents(parent);
-                    })
+                    addEventsForContent();
                 }
+                addEmptyContent();
             });
         }
 
         function addEmptyContent(){
             const contentDiv = $("div.contents");
+            if(contentDiv.length==0){
+                const menuId = $("li.active")[0].id;
+                const conNum = menuId.split("_")[1];
+                const contentsDiv = $("<div>").attr({class:'emptyContents show',id:`empty${conNum}-1`});
+                const addCont = $("<img>").attr({class:'addCont',src:'./images/추가.png'}).appendTo(contentsDiv);
+                contentsDiv.appendTo($(".main-content"));
+
+                addCont.on('mousedown', function(event){
+                    addCont.attr('src','./images/추가_클릭.png');
+                })
+                addCont.on('click', function(event){
+                    const parent = this.parentElement;
+                    uploadContents(parent);
+                })
+            }
             for(var i=0; i<contentDiv.length; i++){
                 const emptyId = 'empty' + contentDiv[i].id.substring(7,contentDiv[i].id.length)
-                const emptyDiv = $("<div>").attr({class:'emptyContents hide',id: emptyId});
+                const emptyDiv = $("<div>").attr({class:'emptyContents show',id: emptyId});
                 contentDiv[i].after(emptyDiv[0]);
-                emptyDiv.on('mouseover', function(event) {
-                    if($(".editContent").length==0) {
-                        this.setAttribute('class', 'emptyContents show');
-                        if (this.children.length == 0) {
-                            const addCont = $("<img>").attr({class: 'addCont', src: './images/추가.png'}).appendTo(this);
-                            addCont.on('mousedown', function (event) {
-                                addCont.attr('src', './images/추가_클릭.png');
-                            })
-                            addCont.on('click', function (event) {
-                                uploadContents(emptyDiv[0]);
-                            });
-                        }
-                    }
-                });
-                emptyDiv.on('mouseleave', function(event) {
-                    // if(event.toElement.className!=null && (event.toElement.className=='body-area')) {
-                    if($(".editContent").length==0){
-                        this.setAttribute('class', 'emptyContents hide');
-                        const childs = this.children;
-                        for(var j=0; j<childs.length; j++){
-                            childs[j].remove();
-                            j--;
-                        }
-                    }
-                    // }
+
+                const addCont = $("<img>").attr({class: 'addCont', src: './images/추가.png'}).appendTo(emptyDiv);
+                addCont.on('mousedown', function (event) {
+                    addCont.attr('src', './images/추가_클릭.png');
+                })
+                addCont.on('click', function (event) {
+                    uploadContents(emptyDiv[0]);
                 });
             }
         }
@@ -218,9 +128,9 @@
                 const parent = this.parentElement;
                this.remove();
                 $(".addText").remove();
-                const num = parent.id.split("-")[1];
+                const num = Number(parent.id.split("-")[1]);
                 const folder = 'content'+ $("li[class='menu active']")[0].id.split("_")[1];
-                const uploadForm = $("<form>").attr({class:'uploadForm',action:'/main/upload',encType:'multipart/form-data',method:'POST'});
+                const uploadForm = $("<form>").attr({class:'uploadForm',action:'/main/uploadImg',encType:'multipart/form-data',method:'POST'});
                 $("<input>").attr({type:'hidden', name:'folder', value:folder}).appendTo(uploadForm);
                 $("<input>").attr({type:'hidden', name:'num', value:num}).appendTo(uploadForm);
                 $("<input>").attr({type:'file',name:'content_img',accept:'image/jpg,image/png,image/jpeg'}).appendTo(uploadForm);
@@ -229,25 +139,20 @@
                 submitBtn.appendTo(parent);
 
                 submitBtn.on('click', function(event){
-                    var formData = new FormData($(".uploadForm")[0]);
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST" , "/main/upload" );
-                    xhr.send(formData);
-
-                    xhr.addEventListener('load', function(){
-                        const main_content = document.querySelector('.main-content');
-                        main_content.innerHTML = xhr.responseText;
-                    });
+                    const formData = new FormData($(".uploadForm")[0]);
+                    const contType = 'image';
+                    sendAjax('/main/uploadImg',formData,contType);
                 });
             })
             addText.on('click', function(event){
                 const parent = this.parentElement;
                 parent.className = 'emptyContents';
                 parent.style.height = 'auto';
+                console.log(parent.id);
                 const contentName = 'content'+parent.id.substring(5,parent.id.length)
                 this.remove();
                 $(".addImg").remove();
-                const editForm = $("<form>").attr({class:'editForm',action:'/main/update', method:'POST'});
+                const editForm = $("<form>").attr({class:'editForm',action:'/main/uploadText', method:'POST'});
                 $("<textarea>").attr({class:'editContent',rows:'3',cols:'100',name:'editData'}).appendTo(editForm);
                 $("<input>").attr({type:'hidden', name:'num', value:contentName}).appendTo(editForm);
                 $("<input>").attr({type:'hidden', name:'tag', value:'H1'}).appendTo(editForm);
@@ -257,7 +162,146 @@
                 const divBtn = $("<div>").attr('class', 'btn_div');
                 const submitBtn = $("<button>").attr('class','submit').text('확인');
                 submitBtn.appendTo(divBtn);
-                divBtn.appendTo(editForm);
+                divBtn.appendTo(parent);
+
+                submitBtn.on('click', function(event){
+                    var data = {
+                        "editData": $(".editContent")[0].value,
+                        "num": $(".editContent")[0].nextSibling.value,
+                        "tag": $(".editContent")[0].nextSibling.nextSibling.value
+                    };
+                    data = JSON.stringify(data);
+                    const contType = 'text';
+                    sendAjax('/main/uploadText', data, contType);
+                });
+            });
+        }
+
+        function addEventsForContent(){
+            $(".slide").mouseover(function(){
+                $(".slide").attr('class','slide is-paused');
+            });
+            $(".slide").mouseout(function(){
+                $(".slide").attr('class','slide');
+            });
+            $(".contents").mouseover(function(){
+                if($(".btn_group").length==0 && $(".editForm").length==0){
+                    const parent = this;
+                    parent.setAttribute('class', 'contents editable');
+                    const div = $("<div>").attr('class','btn_group');
+                    const editBtn = $("<button>").attr('class','edit').text('수정');
+                    const removeBtn = $("<button>").attr('class','remove').text('삭제');
+                    if(parent.children[0].tagName=='IMG'){
+                        removeBtn.appendTo(div);
+                    } else {
+                        editBtn.appendTo(div);
+                        removeBtn.appendTo(div);
+                    }
+                    div.prependTo(parent);
+
+                    editBtn[0].addEventListener('click',function(event){
+                        const parent = event.path[2];
+                        const content = parent.children[0];
+                        parent.className = 'contents editMode';
+                        $("button.remove").remove();
+                        this.remove();
+                        const editForm = $("<form>").attr({class:'editForm',action:'/main/update', method:'POST'});
+                        if(content.tagName=='DIV'){
+                            if(content.className!=null && content.className=='slide'){
+                                const imgList = $('.slide').children().children().children();
+                                var srcList =''
+                                for(var i=0; i<imgList.length; i++){
+                                    if(imgList.length-1 == i){
+                                        srcList = srcList + imgList[i].getAttribute('src')
+                                    } else {
+                                        srcList = srcList + imgList[i].getAttribute('src') + ',';
+                                    }
+                                }
+                                $("<input>").attr({type:'hidden', name:'editData', value:srcList}).appendTo(editForm);
+                                $("<input>").attr({type:'hidden', name:'tag', value:'IMG'}).appendTo(editForm);
+                                $("<input>").attr({type:'hidden', name:'num', value:parent.id}).appendTo(editForm);
+                            }
+                        } else if(content.tagName=='IMG'){
+                            const imgSrc = content.getAttribute('src');
+                            $("<input>").attr({type:'hidden', name:'editData', value:imgSrc}).appendTo(editForm);
+                            $("<input>").attr({type:'hidden', name:'tag', value:'IMG'}).appendTo(editForm);
+                            $("<input>").attr({type:'hidden', name:'num', value:parent.id}).appendTo(editForm);
+                        } else {
+                            content.style.display = 'none';
+                            //편집모드 전환, textarea 생성
+                            $("<textarea>").attr({class:'editContent',rows:'3',cols:'120',name:'editData'})
+                                .html(content.innerHTML.replaceAll("<br>","\n")).appendTo(editForm);
+                            $("<input>").attr({type:'hidden', name:'tag', value:content.tagName}).appendTo(editForm);
+                            $("<input>").attr({type:'hidden', name:'num', value:parent.id}).appendTo(editForm);
+                        }
+                        editForm.appendTo(parent);
+
+                        //submit 버튼 추가
+                        const divBtn = $("<div>").attr('class', 'btn_div');
+                        const submitBtn = $("<button>").attr('class','submit').text('확인');
+                        submitBtn.appendTo(divBtn);
+                        divBtn.appendTo(parent);
+
+                        submitBtn.on('click', function(event){
+                            var contData = {
+                                "editData": $(".editData")[0].value,
+                                "tag": $(".editData")[0].nextSibling.value,
+                                "num": $(".editData")[0].nextSibling.nextSibling.value
+                            };
+                            contData = JSON.stringify(contData);
+                            const contType = 'text';
+                            sendAjax('/main/update',contData,contType);
+                        });
+                    });
+
+                    removeBtn[0].addEventListener('click',function(event) {
+                        const parent = event.path[2];
+                        const content = parent.children[0];
+                        parent.className = 'contents editMode';
+                        $("button.edit").remove();
+                        this.remove();
+                        if($(".emptyContents").length==1){
+                            const resetId = $("li[class='menu active']")[0].id.split("_")[1];
+                            $(".emptyContents")[0].setAttribute('id','empty'+resetId+'-1')
+                        }
+
+                        var contData = {
+                            "remMenu": parent.id.split("-")[0],
+                            "remNum": parent.id.split("-")[1]
+                        };
+                        contData = JSON.stringify(contData);
+                        var contType = '';
+                        if(content.tagName=='IMG'){
+                            contType = 'image';
+                        } else {
+                            contType = 'text';
+                        }
+                        sendAjax('/main/remove',contData,contType);
+                    });
+                }
+            });
+            $(".contents").mouseout(function(event){
+                if(event.toElement.className!=null && (event.toElement.className=='btn_group' || event.toElement.className=='edit' || event.toElement.className=='remove')) {
+                } else {
+                    this.setAttribute('class','contents');
+                    if($(".btn_group")){
+                        $(".btn_group").remove();
+                    }
+                }
+            });
+        }
+
+        function sendAjax(url, data, type){
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST" , url );
+            if(type=='text') xhr.setRequestHeader('Content-Type',"application/json");
+            xhr.send(data);
+
+            xhr.addEventListener('load', function(){
+                const main_content = document.querySelector('.main-content');
+                main_content.innerHTML = xhr.responseText;
+                addEventsForContent();
+                addEmptyContent();
             });
         }
     </script>

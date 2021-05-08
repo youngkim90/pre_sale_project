@@ -243,11 +243,20 @@ ul {
     margin-top: 20px;
     display: inline;
 }
+
 .emptyContents.show {
-    border: 1px solid grey;
+    border: 1px solid #bfbfbf;
     border-radius: 10px;
     min-height: 40px;
+    margin: 10px;
 }
+
 .emptyContents.hide {
     height: 10px;
+}
+
+input[name='content_img'], input[type='submit'] {
+    font-size: 18px;
+    margin: 12px;
+    border-radius: 5px;
 }
