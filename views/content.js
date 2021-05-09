@@ -1,6 +1,5 @@
 const db = require('../router/db');
 const fs = require('fs');
-const multer = require('multer');
 
 module.exports = {
     content:function(data,res) {
@@ -19,7 +18,6 @@ module.exports = {
                     const row = getContentHTML(rowName, content, tag);
                     html+=row;
                 }
-                console.log(html);
                 res.end(html);
             }
         });
@@ -30,28 +28,26 @@ module.exports = {
 
         const query = db.query('select * from content1', function (err, rows) {
             if (err) throw err;
-            rows.sort(function (a, b) {
-                const numA = a.name.slice(9);
-                const numB = b.name.slice(9);
-                return numA < numB ? -1 : numA > numB ? 1 : 0;
-            });
             imgList += `<ul style="width:calc(100% * ${files.length})">`;
             for (var i = 0; i < files.length; i++) {
                 imgList += `<li style="width:calc(100% / ${files.length})"><img class="slideImg" src="./images/slide/${files[i]}"/></li>`;
             }
             imgList += `</ul>`;
-            const html = `<div class="contents" id="content1-1"><h1>${rows[0].content}</h1></div>
-                <div class="contents" id="content1-2"><h2>${rows[1].content}</h2></div>
-                <div class="contents" id="content1-3"><h2>${rows[2].content}</h2></div>
-                <div class="contents" id="content1-4">
-                    <div class="slide">
-                        ${imgList}
-                    </div>
+            var html = `
+                <div class="slide">
+                    ${imgList}
                 </div>
-                <div class="contents" id="content1-5">
-                    <img src=${rows[4].content}> 
-                </div>
-                `;
+            `;
+            if(rows.length>0) {
+                const sortRows = sortWithName(rows)
+                for (var j = 0; j < sortRows.length; j++) {
+                    const tag = sortRows[j].tag;
+                    const content = sortRows[j].content;
+                    const rowName = data + "-" + sortRows[j].name;
+                    const row = getContentHTML(rowName, content, tag);
+                    html += row;
+                }
+            }
             res.end(html);
         })
     }
@@ -83,14 +79,6 @@ function getContentHTML(rowId, content, tag){
     }
     html += '</div>';
     return html;
-}
-
-function getImageHTML(menu, imgList){
-    var imgHTML='';
-    for (var i=0; i<imgList.length; i++) {
-        imgHTML += `<div class="contents" id="${menu}-${i+1}"><img class="imgList" src="./images/${menu}/${imgList[i]}" style="width:100%"/></div>`;
-    }
-    return imgHTML;
 }
 
 function getFileList(path){

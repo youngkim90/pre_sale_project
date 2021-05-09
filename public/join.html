@@ -5,17 +5,51 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Join</title>
+    <title>관리자 로그인</title>
+    <link rel="stylesheet" type="text/css" href="style/join.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
-<h1> join my website </h1>
 
-<form action="/join" method="POST">
-    email : <input type="text" name="email"><br/>
-    name : <input type="text" name="name"><br/>
-    password : <input type="text" name="password"><br/>
-    <input type="submit">
-</form>
+<div class="body-area">
+    <div class="main-content">
+        <form class="joinForm" action="/login" method="POST">
+            <h1>관리자 로그인</h1>
+            <div class="login_info">아이디</div>:   <div class="login_info"><input type="text" name="userid" id="user"></div></br></br>
+            <div class="login_info">비밀번호</div>:   <div class="login_info"><input type="password" name="password" id="pw"></div></br></br>
+        </form>
+            <input type="submit" value="로그인">
+    </div>
+</div>
 
 </body>
+
+<script>
+    $("input[type='submit']").on('click', function(event){
+        const user = $("#user")[0].value;
+        const pw = $("#pw")[0].value;
+        if(user && pw) {
+            var xhr = new XMLHttpRequest();
+            var data = {'userid': user, 'password': pw};
+            data = JSON.stringify(data);
+            xhr.open("POST", '/login');
+            xhr.setRequestHeader('Content-Type', "application/json");
+            xhr.send(data);
+
+            xhr.addEventListener('load', function () {
+                if (xhr.responseText) {
+                    var result = JSON.parse(xhr.responseText);
+                    var session = sessionStorage;
+                    if(result.userid=='admin'){
+                        window.location.href = "/";
+                    } else {
+                        alert(result);
+                    }
+                }
+            });
+        } else {
+            alert('로그인 정보를 모두 입력하세요.')
+        }
+    })
+</script>
 </html>

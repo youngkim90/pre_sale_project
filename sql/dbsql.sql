@@ -5,14 +5,18 @@ create database presale;
 
 create table userTB(
     id int(11) not null auto_increment,
-    name varchar(100) not null,
-    phone int(20) not null,
+    user varchar(20) not null,
+    passwd varchar(30) not null,
+    name varchar(20) null,
+    phone int(20) null,
     email varchar(100) null,
     address varchar(300) null,
     age int(10) null,
     sex varchar(10) null,
     etc varchar(500) null,
     primary key(id));
+
+insert into userTB (user, passwd) values ('admin', 'sejin123');
 
 create table content1(
    id int(11) not null auto_increment,

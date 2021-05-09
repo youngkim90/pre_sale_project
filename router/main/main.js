@@ -5,10 +5,10 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-const parser =bodyParser.urlencoded({extended: true});
 const content = require('../../views/content');
 const db = require('../db');
 const multer = require('multer');
+const fs = require('fs');
 
 var upload = multer({
     storage: multer.diskStorage({
@@ -24,6 +24,7 @@ var upload = multer({
 });
 
 router.get('/', function(req,res){
+    console.log('user = '+req.user);
     res.sendFile(path.join(__dirname,'../public/main.html'));
 });
 
@@ -45,6 +46,9 @@ router.post('/update', function(req,res){
 
     if(data.indexOf('\r\n')!=-1){
         data = data.split('\r\n').join('<br/>');
+    }
+    if(data.indexOf('\n')!=-1){
+        data = data.split('\n').join('<br/>');
     }
 
     db.query(`select * from ${menu} where name=?`, [num], function(err,rows) {
@@ -87,13 +91,15 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
             console.log('insert test');
             const query = db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [Number(num)+1, fileName, 'IMG'], function (err2, result) {
                 if(err2) throw err2;
-                content.content(menu, res);
+                if(menu=='content1') content.content1(menu, res);
+                else content.content(menu, res);
             })
         }else {
             console.log('first insert test');
             db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, fileName, 'IMG'], function (err2, result) {
                 if (err2) throw err2;
-                content.content(menu, res);
+                if(menu=='content1') content.content1(menu, res);
+                else content.content(menu, res);
             })
         }
         console.log('img upload complete');
@@ -130,13 +136,15 @@ router.post("/uploadText",function(req, res) {
             console.log('insert test');
             db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [Number(num)+1, data, tag], function (err2, result) {
                 if(err2) throw err2;
-                content.content(menu, res);
+                if(menu=='content1') content.content1(menu, res);
+                else content.content(menu, res);
             })
         }else {
             console.log('first insert test');
             db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, data, tag], function (err2, result) {
                 if (err2) throw err2;
-                content.content(menu, res);
+                if(menu=='content1') content.content1(menu, res);
+                else content.content(menu, res);
             })
         }
         console.log('text upload complete');
@@ -146,6 +154,7 @@ router.post("/uploadText",function(req, res) {
 router.post('/remove', function(req,res){
     const remName = req.body.remMenu;
     const remNum = req.body.remNum;
+    var filePath = __dirname
 
     db.query(`select * from ${remName}`, function(err,rows) {
         if (err) throw err
@@ -154,6 +163,15 @@ router.post('/remove', function(req,res){
                 const numA = a.name;
                 const numB = b.name;
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
+            });
+            db.query(`select*from ${remName} where name=?`, [remNum], function (err, result) {
+                if (err) throw err;
+                filePath =path.join(__dirname,`../../public/images/${remName}/${result[0].content}`);
+                console.log(filePath);
+                fs.unlink(filePath, function(error){
+                    if(error) return '삭제할 수 없습니다.';
+                    console.log('file remove');
+                });
             });
             db.query(`delete from ${remName} where name=?`, [remNum], function (err2, result) {
                 if (err2) throw err2;
@@ -165,13 +183,14 @@ router.post('/remove', function(req,res){
                     console.log('update test')
                     db.query(`update ${remName} set name=? where name=?`, [Number(rows[i].name) - 1, rows[i].name], function (err2, result) {
                         if (err2) throw err2;
-                        console.log('test');
                     })
                 }
             }
+
             db.query(`select * from ${remName} where name=?`, ['1'], function (err2, result) {
                 if(err2) throw err2;
-                content.content(remName, res);
+                if(remName=='content1') content.content1(remName, res);
+                else content.content(remName, res);
             })
         }
     });

@@ -34,7 +34,6 @@
                 <li class="menu" id="menu_5"><a href="javascript:void(0)">평면도</a></li>
                 <li class="menu" id="menu_6"><a href="javascript:void(0)">커뮤니티</a></li>
                 <li class="menu" id="menu_7"><a href="javascript:void(0)">주변입지</a></li>
-                <li class="menu" id="test_8"><a href="javascript:void(0)">Test</a></li>
             </ul>
         </nav>
     </div>
@@ -44,7 +43,7 @@
         </div>
     </div>
     <div class="footer-area">
-
+        <div class="admin_login"><a href="./join">관리자</a></div>
     </div>
     <script>
         const allMenu = document.querySelectorAll('.menu');
@@ -83,7 +82,7 @@
 
         function addEmptyContent(){
             const contentDiv = $("div.contents");
-            if(contentDiv.length==0){
+            if(contentDiv.length===0){
                 const menuId = $("li.active")[0].id;
                 const conNum = menuId.split("_")[1];
                 const contentsDiv = $("<div>").attr({class:'emptyContents show',id:`empty${conNum}-1`});
@@ -94,28 +93,37 @@
                     addCont.attr('src','./images/추가_클릭.png');
                 })
                 addCont.on('click', function(event){
+                    addCont.attr('src','./images/추가.png');
                     const parent = this.parentElement;
                     uploadContents(parent);
                 })
-            }
-            for(var i=0; i<contentDiv.length; i++){
-                const emptyId = 'empty' + contentDiv[i].id.substring(7,contentDiv[i].id.length)
-                const emptyDiv = $("<div>").attr({class:'emptyContents show',id: emptyId});
-                contentDiv[i].after(emptyDiv[0]);
+            } else {
+                for (var i = 0; i < contentDiv.length; i++) {
+                    const emptyId = 'empty' + contentDiv[i].id.substring(7, contentDiv[i].id.length)
+                    const emptyDiv = $("<div>").attr({class: 'emptyContents show', id: emptyId});
+                    contentDiv[i].after(emptyDiv[0]);
 
-                const addCont = $("<img>").attr({class: 'addCont', src: './images/추가.png'}).appendTo(emptyDiv);
-                addCont.on('mousedown', function (event) {
-                    addCont.attr('src', './images/추가_클릭.png');
-                })
-                addCont.on('click', function (event) {
-                    uploadContents(emptyDiv[0]);
-                });
+                    const addCont = $("<img>").attr({class: 'addCont', src: './images/추가.png'}).appendTo(emptyDiv);
+                    addCont.on('mousedown', function (event) {
+                        addCont.attr('src', './images/추가_클릭.png');
+                    })
+                    addCont.on('click', function (event) {
+                        addCont.attr('src','./images/추가.png');
+                        if($(".editForm").length==0 && $(".uploadForm").length==0) {
+                            uploadContents(emptyDiv[0]);
+                        } else {
+                            alert('진행중인 작업이 있습니다.');
+                            addCont.attr('src', './images/추가.png');
+                        }
+                    });
+                }
             }
         }
 
         function uploadContents(parent){
             const menu = parent.id.split("-")[0];
-            parent.children[0].remove();
+            console.log(parent.children[0].className);
+            parent.children[0].style.display ="none";
             const addImg = $("<img>").attr({class:'addImg',src:'./images/이미지.png',style:'width:100px;'}).appendTo(parent);
             const addText = $("<img>").attr({class:'addText',src:'./images/글.png',style:'width:52px;'}).appendTo(parent);
             addImg.on('mousedown', function(event){
@@ -152,27 +160,57 @@
                 const contentName = 'content'+parent.id.substring(5,parent.id.length)
                 this.remove();
                 $(".addImg").remove();
+
                 const editForm = $("<form>").attr({class:'editForm',action:'/main/uploadText', method:'POST'});
+                $("<div>").attr('style','display:inline').text('글씨크기: ').appendTo(editForm);
+                $("<input>").attr({type:'radio', name:'chk_tag', id:'tag_h3', value:'H3'}).appendTo(editForm);
+                $("<label>").attr({for:'tag_h3'}).text('작게').appendTo(editForm);
+                $("<input>").attr({type:'radio', name:'chk_tag', id:'tag_h2', value:'H2', checked:true}).appendTo(editForm);
+                $("<label>").attr({for:'tag_h2'}).text('중간').appendTo(editForm);
+                $("<input>").attr({type:'radio', name:'chk_tag', id:'tag_h1', value:'H1'}).appendTo(editForm);
+                $("<label>").attr({for:'tag_h1'}).text('크게').appendTo(editForm);
+
                 $("<textarea>").attr({class:'editContent',rows:'3',cols:'100',name:'editData'}).appendTo(editForm);
                 $("<input>").attr({type:'hidden', name:'num', value:contentName}).appendTo(editForm);
                 $("<input>").attr({type:'hidden', name:'tag', value:'H1'}).appendTo(editForm);
+
+
                 //form에 추가
                 editForm.appendTo(parent);
                 //submit 버튼 추가
                 const divBtn = $("<div>").attr('class', 'btn_div');
                 const submitBtn = $("<button>").attr('class','submit').text('확인');
+                const cancelBtn = $("<button>").attr('class','cancel').text('취소');
                 submitBtn.appendTo(divBtn);
+                cancelBtn.appendTo(divBtn);
                 divBtn.appendTo(parent);
 
                 submitBtn.on('click', function(event){
-                    var data = {
-                        "editData": $(".editContent")[0].value,
-                        "num": $(".editContent")[0].nextSibling.value,
-                        "tag": $(".editContent")[0].nextSibling.nextSibling.value
-                    };
-                    data = JSON.stringify(data);
-                    const contType = 'text';
-                    sendAjax('/main/uploadText', data, contType);
+                    if($(".editContent")[0].value){
+                        const chkList = $("input[name='chk_tag']");
+                        var chk = '';
+                        for(var j=0; j<chkList.length; j++){
+                            if(chkList[j].checked == true){
+                                chk = chkList[j].value;
+                            }
+                        }
+                        var data = {
+                            "editData": $(".editContent")[0].value,
+                            "num": $(".editContent")[0].nextSibling.value,
+                            "tag": chk
+                        };
+                        data = JSON.stringify(data);
+                        const contType = 'text';
+                        sendAjax('/main/uploadText', data, contType);
+                    } else {
+                        alert('내용을 입력하세요');
+                    }
+                });
+                cancelBtn.on('click', function(event){
+                    $(".editForm")[0].previousSibling.style.display='';
+                    $(".editForm")[0].previousSibling.parentElement.className = 'emptyContents show'
+                    $(".editForm").remove();
+                    $(".btn_div").remove();
                 });
             });
         }
@@ -201,11 +239,12 @@
 
                     editBtn[0].addEventListener('click',function(event){
                         const parent = event.path[2];
-                        const content = parent.children[0];
+                        const content = parent.children[1];
                         parent.className = 'contents editMode';
                         $("button.remove").remove();
                         this.remove();
                         const editForm = $("<form>").attr({class:'editForm',action:'/main/update', method:'POST'});
+
                         if(content.tagName=='DIV'){
                             if(content.className!=null && content.className=='slide'){
                                 const imgList = $('.slide').children().children().children();
@@ -217,22 +256,24 @@
                                         srcList = srcList + imgList[i].getAttribute('src') + ',';
                                     }
                                 }
-                                $("<input>").attr({type:'hidden', name:'editData', value:srcList}).appendTo(editForm);
+                                $("<input>").attr({class:'editContent',type:'hidden', name:'editData', value:srcList}).appendTo(editForm);
                                 $("<input>").attr({type:'hidden', name:'tag', value:'IMG'}).appendTo(editForm);
                                 $("<input>").attr({type:'hidden', name:'num', value:parent.id}).appendTo(editForm);
                             }
                         } else if(content.tagName=='IMG'){
                             const imgSrc = content.getAttribute('src');
-                            $("<input>").attr({type:'hidden', name:'editData', value:imgSrc}).appendTo(editForm);
+                            $("<input>").attr({class:'editContent', type:'hidden', name:'editData', value:imgSrc}).appendTo(editForm);
                             $("<input>").attr({type:'hidden', name:'tag', value:'IMG'}).appendTo(editForm);
                             $("<input>").attr({type:'hidden', name:'num', value:parent.id}).appendTo(editForm);
                         } else {
                             content.style.display = 'none';
                             //편집모드 전환, textarea 생성
-                            $("<textarea>").attr({class:'editContent',rows:'3',cols:'120',name:'editData'})
+                            $("<textarea>").attr({class:'editContent',rows:'3',cols:'100',name:'editData'})
                                 .html(content.innerHTML.replaceAll("<br>","\n")).appendTo(editForm);
                             $("<input>").attr({type:'hidden', name:'tag', value:content.tagName}).appendTo(editForm);
                             $("<input>").attr({type:'hidden', name:'num', value:parent.id}).appendTo(editForm);
+
+                            const divTag = $("<div>").attr('class', 'tag_div');
                         }
                         editForm.appendTo(parent);
 
@@ -243,14 +284,18 @@
                         divBtn.appendTo(parent);
 
                         submitBtn.on('click', function(event){
-                            var contData = {
-                                "editData": $(".editData")[0].value,
-                                "tag": $(".editData")[0].nextSibling.value,
-                                "num": $(".editData")[0].nextSibling.nextSibling.value
-                            };
-                            contData = JSON.stringify(contData);
-                            const contType = 'text';
-                            sendAjax('/main/update',contData,contType);
+                            if($(".editContent")[0].value) {
+                                var contData = {
+                                    "editData": $(".editContent")[0].value,
+                                    "tag": $(".editContent")[0].nextSibling.value,
+                                    "num": $(".editContent")[0].nextSibling.nextSibling.value
+                                };
+                                contData = JSON.stringify(contData);
+                                const contType = 'text';
+                                sendAjax('/main/update', contData, contType);
+                            } else {
+                                alert('내용을 입력하세요')
+                            }
                         });
                     });
 
