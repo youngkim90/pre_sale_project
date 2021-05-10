@@ -69,6 +69,10 @@
                     $("li[class='menu active']").attr('class','menu');
                     this.classList.add('active');
                     const menuId = this.id
+                    if($(".menu-toggle").attr('expanded') === "true"){
+                        $(".menu-toggle").attr('expanded','false');
+                        $(".menu_list").css('display','none');
+                    }
                     getContent(menuId);
                 })
             }

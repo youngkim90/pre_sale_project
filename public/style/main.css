@@ -150,7 +150,7 @@ body {
 }
 
 .slideImg, imgList{
-    width: 1000px;
+    width: 100%;
 }
 
 .slide {
@@ -158,9 +158,10 @@ body {
 }
 
 .slide ul {
-    /*width:calc(100% * 5);*/
+    width:calc(100% * 5);
     display:flex;
     animation:slide 16s infinite;
+    padding: 0;
 }
 
 ul {
@@ -168,8 +169,7 @@ ul {
 }
 
 .slide li{
-    /*width:calc(100% / 5);*/
-    margin-right: -10px;
+    width:calc(100% / 5);
 }
 
 @keyframes slide {

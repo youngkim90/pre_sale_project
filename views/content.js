@@ -28,9 +28,11 @@ module.exports = {
 
         const query = db.query('select * from content1', function (err, rows) {
             if (err) throw err;
-            imgList += `<ul style="width:calc(100% * ${files.length})">`;
+            // imgList += `<ul style="width:calc(100% * ${files.length})">`;
+            imgList += `<ul>`;
             for (var i = 0; i < files.length; i++) {
-                imgList += `<li style="width:calc(100% / ${files.length})"><img class="slideImg" src="./images/slide/${files[i]}"/></li>`;
+                imgList += `<!--<li style="width:calc(100% / ${files.length})"><img class="slideImg" src="./images/slide/${files[i]}"/></li>-->`;
+                imgList += `<li><img class="slideImg" src="./images/slide/${files[i]}"/></li>`;
             }
             imgList += `</ul>`;
             var html = `
