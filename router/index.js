@@ -25,7 +25,6 @@ router.post('/chkAdmin', function(req, res){
     const query = db.query('select * from userTB where user=?', ['admin'], function(err,rows) {
         if(req.user){
             if(req.user === rows[0].id){
-                console.log('hi');
                 res.json("true");
             } else {
                 res.json("false");

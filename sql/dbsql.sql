@@ -23,6 +23,7 @@ create table content1(
    name varchar(20) null,
    content varchar(1000) null,
    tag varchar(20) null,
+   size varchar(20) null,
    primary key(id));
 
 create table content2(
@@ -30,6 +31,7 @@ create table content2(
     name varchar(20) null,
     content varchar(1000) null,
     tag varchar(20) null,
+    size varchar(20) null,
     primary key(id));
 
 create table content3(
@@ -37,6 +39,7 @@ create table content3(
     name varchar(20) null,
     content varchar(1000) null,
     tag varchar(20) null,
+    size varchar(20) null,
     primary key(id));
 
 create table content4(
@@ -44,6 +47,7 @@ create table content4(
     name varchar(20) null,
     content varchar(1000) null,
     tag varchar(20) null,
+    size varchar(20) null,
     primary key(id));
 
 create table content5(
@@ -51,6 +55,7 @@ create table content5(
     name varchar(20) null,
     content varchar(1000) null,
     tag varchar(20) null,
+    size varchar(20) null,
     primary key(id));
 
 create table content6(
@@ -58,6 +63,7 @@ create table content6(
     name varchar(20) null,
     content varchar(1000) null,
     tag varchar(20) null,
+    size varchar(20) null,
     primary key(id));
 
 create table content7(
@@ -65,6 +71,7 @@ create table content7(
     name varchar(20) null,
     content varchar(1000) null,
     tag varchar(20) null,
+    size varchar(20) null,
     primary key(id));
 
 create table content8(
@@ -72,6 +79,7 @@ create table content8(
     name varchar(20) null,
     content varchar(1000) null,
     tag varchar(20) null,
+    size varchar(20) null,
     primary key(id));
 
 

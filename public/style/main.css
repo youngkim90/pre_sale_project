@@ -21,9 +21,10 @@ body {
 
 .footer-area {
     width: 100%;
-    height: 60px;
+    height: 80px;
     background-color: rgb(33,89,104);
     border-top: 5px solid rgb(48, 131, 153);
+    text-align: center;
 }
 
 .menu_list {
@@ -149,8 +150,14 @@ body {
     font-weight: normal;
 }
 
-.slideImg, imgList{
+.slideImg {
     width: 100%;
+    margin-top: 20px;
+}
+
+.imgList{
+    max-width: 100%;
+    margin-top: 70px;
 }
 
 .slide {
@@ -240,12 +247,17 @@ ul {
     margin-top: 20px;
     display: inline;
 }
+.emptyContents.show button{
+    font-size: 18px;
+    border-radius: 5px;
+}
 
 .emptyContents.show {
     border: 1px solid #bfbfbf;
     border-radius: 10px;
     min-height: 40px;
     margin: 10px;
+    padding: 15px;
 }
 
 .emptyContents.hide {
@@ -254,7 +266,7 @@ ul {
 
 input[name='content_img'], input[type='submit'] {
     font-size: 18px;
-    margin: 12px;
+    margin: 15px;
     border-radius: 5px;
 }
 
@@ -297,9 +309,15 @@ input[name='content_img'], input[type='submit'] {
         color: white;
         border: 1px solid #9ecb89;
     }
-    .menu-toggle:hover, .menu-toggle:focus {
+    .menu-toggle:hover {
         background-color: #349861;
         color: white;
+    }
+
+    .menu-toggle:active {
+        background-color: #2a7d4f;
+        color: white;
+        box-shadow: 2px 2px 2px;
     }
 
     .header_nav ul {
@@ -345,4 +363,35 @@ input[name='content_img'], input[type='submit'] {
     #menu_1 {
         border-left: none;
     }
+}
+
+.foot_list {
+    list-style: none;
+    position: relative;
+    /*left: 33%*/
+}
+
+.foot_list a {
+    outline: none;
+    color: #f3f3f3;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.foot_list a:hover {
+    color: #c9fd5a;
+}
+
+.foot_list li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.footMark {
+    color: #e5e4e4;
+    display: block;
+    position: relative;
+    /*left: 50%;*/
+    /*transform: translate(-10%,-50%);*/
+    font-size: 12px;
 }

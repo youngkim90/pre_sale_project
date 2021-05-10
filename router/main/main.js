@@ -24,7 +24,6 @@ var upload = multer({
 });
 
 router.get('/', function(req,res){
-    console.log('user = '+req.user);
     res.sendFile(path.join(__dirname,'../public/main.html'));
 });
 
@@ -33,6 +32,7 @@ router.post('/content', function(req,res){
         const data = req.body.data;
         const tableName = 'content' + data.split("_")[1];
         if(data === 'menu_1') content.content1(tableName, res);
+        else if(data === 'footContent') content.footContent(res);
         else content.content(tableName, res);
     }
 })
@@ -40,6 +40,7 @@ router.post('/content', function(req,res){
 router.post('/update', function(req,res){
     var data = req.body.editData;
     var rowNum = req.body.num;
+    var align = req.body.align;
     const tag = req.body.tag;
     const menu = rowNum.split("-")[0];
     const num = rowNum.split("-")[1];
@@ -54,12 +55,12 @@ router.post('/update', function(req,res){
     db.query(`select * from ${menu} where name=?`, [num], function(err,rows) {
         if(err) throw err
         if(rows.length>0){
-            const query = db.query(`update ${menu} set name=?, content=?, tag=? where name=?`, [num, data, tag, num], function (err2, result) {
+            const query = db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [num, data, tag, align, num], function (err2, result) {
                 if(data === 'content1') content.content1(menu, res);
                 else content.content(menu, res);
             })
         } else {
-            const query = db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, data, tag], function (err2, result) {
+            const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, data, tag, align], function (err2, result) {
                 res.writeHead(302, {Location: `/`});
                 res.end();
             })
@@ -70,26 +71,28 @@ router.post('/update', function(req,res){
 router.post("/uploadImg", upload.single("content_img"),function(req, res) {
     const menu = req.body.folder;
     const num = req.body.num;
+    const size = req.body.size;
+    console.log(size);
     const fileName = req.file.filename;
 
     db.query(`select * from ${menu}`, function(err,rows) {
         if(err) throw err
         if(rows.length>0) {
             rows.sort(function (a, b) {
-                const numA = a.name;
-                const numB = b.name;
+                const numA = Number(a.name);
+                const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     console.log('update test')
-                    db.query(`update ${menu} set name=?, content=?, tag=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].name], function (err2, result) {
+                    db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
                     })
                 }
             }
             console.log('insert test');
-            const query = db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [Number(num)+1, fileName, 'IMG'], function (err2, result) {
+            const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, fileName, 'IMG', size], function (err2, result) {
                 if(err2) throw err2;
                 if(menu === 'content1') content.content1(menu, res);
                 else content.content(menu, res);
@@ -110,6 +113,7 @@ router.post("/uploadText",function(req, res) {
     var data = req.body.editData;
     const rowNum = req.body.num;
     const tag = req.body.tag;
+    const align = req.body.align;
     const menu = rowNum.split("-")[0];
     const num = rowNum.split("-")[1];
     if(data.indexOf('\n')!=-1){
@@ -128,13 +132,13 @@ router.post("/uploadText",function(req, res) {
                     console.log('origin = '+ rows[i].name+'   new = '+ (Number(num) + 1));
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     console.log('update test')
-                    db.query(`update ${menu} set name=?, content=?, tag=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].name], function (err2, result) {
+                    db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
                     })
                 }
             }
             console.log('insert test');
-            db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [Number(num)+1, data, tag], function (err2, result) {
+            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, data, tag, align], function (err2, result) {
                 if(err2) throw err2;
                 if(menu === 'content1') content.content1(menu, res);
                 else content.content(menu, res);

@@ -18,7 +18,8 @@
             <div class="login_info">아이디</div>:   <div class="login_info"><input type="text" name="userid" id="user"></div></br></br>
             <div class="login_info">비밀번호</div>:   <div class="login_info"><input type="password" name="password" id="pw"></div></br></br>
         </form>
-            <input type="submit" value="로그인">
+        <button class="goHome">홈으로</button>
+        <input type="submit" value="로그인">
     </div>
 </div>
 
@@ -50,6 +51,10 @@
         } else {
             alert('로그인 정보를 모두 입력하세요.')
         }
+    })
+
+    $(".goHome").on('click', function(){
+        window.location.href = "/";
     })
 </script>
 </html>

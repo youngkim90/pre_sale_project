@@ -12,10 +12,7 @@ module.exports = {
                 const sortRows = sortWithName(rows)
                 // const num = data.substring(data.length-1,data.length);
                 for(var i=0; i<sortRows.length; i++){
-                    const tag = sortRows[i].tag;
-                    const content = sortRows[i].content;
-                    const rowName = data+"-"+sortRows[i].name;
-                    const row = getContentHTML(rowName, content, tag);
+                    const row = getContentHTML(data,sortRows[i]);
                     html+=row;
                 }
                 res.end(html);
@@ -24,15 +21,14 @@ module.exports = {
     },
     content1:function(data, res) {
         const files = getFileList('./public/images/slide');
-        var imgList = ``;
 
-        const query = db.query('select * from content1', function (err, rows) {
+        db.query('select * from content1', function (err, rows) {
             if (err) throw err;
-            // imgList += `<ul style="width:calc(100% * ${files.length})">`;
-            imgList += `<ul>`;
-            for (var i = 0; i < files.length; i++) {
-                imgList += `<!--<li style="width:calc(100% / ${files.length})"><img class="slideImg" src="./images/slide/${files[i]}"/></li>-->`;
-                imgList += `<li><img class="slideImg" src="./images/slide/${files[i]}"/></li>`;
+            const sortRows = sortWithName(rows);
+            const slideList = files;
+            var imgList = `<ul>`;
+            for (var i = 0; i < slideList.length; i++) {
+                imgList += `<li><img class="slideImg" src="./images/slide/${slideList[i]}"/></li>`;
             }
             imgList += `</ul>`;
             var html = `
@@ -41,43 +37,78 @@ module.exports = {
                 </div>
             `;
             if(rows.length>0) {
-                const sortRows = sortWithName(rows)
                 for (var j = 0; j < sortRows.length; j++) {
                     const tag = sortRows[j].tag;
                     const content = sortRows[j].content;
                     const rowName = data + "-" + sortRows[j].name;
-                    const row = getContentHTML(rowName, content, tag);
+                    const row = getContentHTML(data,sortRows[j]);
                     html += row;
                 }
             }
             res.end(html);
         })
+    },
+    footContent: function(res){
+        var html = `<ul class="foot_list">
+                        <li class="footMenu" id="footmenu_1"><a href="javascript:void(0)">반달섬 마리나 큐브</a></li>
+                        <li class="footMenu" id="footmenu_2"><a href="javascript:void(0)">사업개요</a></li>
+                        <li class="footMenu" id="footmenu_3"><a href="javascript:void(0)">교통안내</a></li>
+                        <li class="footMenu" id="footmenu_4"><a href="javascript:void(0)">고객접수</a></li>
+                        <li class="footMenu" id="footmenu_5"><a href="javascript:void(0)">평면도</a></li>
+                        <li class="footMenu" id="footmenu_6"><a href="javascript:void(0)">커뮤니티</a></li>
+                        <li class="footMenu" id="footmenu_7"><a href="javascript:void(0)">주변입지</a></li>
+                    </ul>
+                    <p class="footMark">반달섬 마리나 큐브 대표번호 1877-7449 Copyright © All rights reserved.</p>
+                    <div class="admin_login"><a href="./join">관리자</a></div>
+                    <div class="admin_logout"><a href="./join">로그아웃</a></div>
+        `;
+        res.end(html);
     }
 }
 
 function sortWithName(data){
     var rows = data;
     rows.sort(function (a, b) {
-        const numA = a.name;
-        const numB = b.name;
+        const numA = Number(a.name);
+        const numB = Number(b.name);
         return numA < numB ? -1 : numA > numB ? 1 : 0;
     });
     return rows;
 }
 
-function getContentHTML(rowId, content, tag){
-    var html = `<div class="contents" id="${rowId}">`;
+function getContentHTML(data, rows){
+    const tag = rows.tag;
+    const content = rows.content;
+    const rowName = data+"-"+rows.name;
+    const size = rows.size;
+    var html = `<div class="contents" id="${rowName}">`;
     if(tag=='H1'){
-        html+=`<h1>${content}</h1>`
+        if(size=='1') {
+            html += `<h1 style="text-align: left;">${content}</h1>`
+        } else {
+            html += `<h1>${content}</h1>`
+        }
     }
     else if(tag=='H2'){
-        html+=`<h2>${content}</h2>`
+        if(size=='1') {
+            html += `<h2 style="text-align: left;">${content}</h2>`
+        } else {
+            html += `<h2>${content}</h2>`
+        }
     }
     else if(tag=='H3'){
-        html+=`<h3>${content}</h3>`
+        if(size=='1') {
+            html += `<h3 style="text-align: left;">${content}</h3>`
+        } else {
+            html += `<h3>${content}</h3>`
+        }
     } else {
-        const menu = rowId.split("-")[0];
-        html+=`<img class="imgList" src="./images/${menu}/${content}"/>`
+        const menu = rowName.split("-")[0];
+        if(size === '2') {
+            html += `<img class="imgList" src="./images/${menu}/${content}" style="width:100%;"/>`
+        } else {
+            html += `<img class="imgList" src="./images/${menu}/${content}"/>`
+        }
     }
     html += '</div>';
     return html;
