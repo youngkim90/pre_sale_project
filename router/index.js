@@ -8,7 +8,6 @@ const localStrategy = require('passport-local').Strategy;
 const db = require('./db');
 
 router.get('/', function(req,res){
-    console.log('user = '+req.user);
     res.sendFile(path.join(__dirname,'../public/main.html'));
 });
 router.get('/logCheck', function(req,res){
@@ -20,6 +19,22 @@ router.get('/logCheck', function(req,res){
         // res.sendFile(path.join(__dirname,'../public/join.html'));
         res.json(msg);
     }
+});
+
+router.post('/chkAdmin', function(req, res){
+    const query = db.query('select * from userTB where user=?', ['admin'], function(err,rows) {
+        if(req.user){
+            if(req.user === rows[0].id){
+                console.log('hi');
+                res.json("true");
+            } else {
+                res.json("false");
+            }
+        } else {
+            res.json("false");
+        }
+
+    });
 });
 
 passport.serializeUser(function(user,done){

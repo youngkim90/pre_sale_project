@@ -32,7 +32,7 @@ router.post('/content', function(req,res){
     if(req.body){
         const data = req.body.data;
         const tableName = 'content' + data.split("_")[1];
-        if(data=='menu_1') content.content1(tableName, res);
+        if(data === 'menu_1') content.content1(tableName, res);
         else content.content(tableName, res);
     }
 })
@@ -55,7 +55,7 @@ router.post('/update', function(req,res){
         if(err) throw err
         if(rows.length>0){
             const query = db.query(`update ${menu} set name=?, content=?, tag=? where name=?`, [num, data, tag, num], function (err2, result) {
-                if(data=='content1') content.content1(menu, res);
+                if(data === 'content1') content.content1(menu, res);
                 else content.content(menu, res);
             })
         } else {
@@ -91,14 +91,14 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
             console.log('insert test');
             const query = db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [Number(num)+1, fileName, 'IMG'], function (err2, result) {
                 if(err2) throw err2;
-                if(menu=='content1') content.content1(menu, res);
+                if(menu === 'content1') content.content1(menu, res);
                 else content.content(menu, res);
             })
         }else {
             console.log('first insert test');
             db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, fileName, 'IMG'], function (err2, result) {
                 if (err2) throw err2;
-                if(menu=='content1') content.content1(menu, res);
+                if(menu === 'content1') content.content1(menu, res);
                 else content.content(menu, res);
             })
         }
@@ -136,14 +136,14 @@ router.post("/uploadText",function(req, res) {
             console.log('insert test');
             db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [Number(num)+1, data, tag], function (err2, result) {
                 if(err2) throw err2;
-                if(menu=='content1') content.content1(menu, res);
+                if(menu === 'content1') content.content1(menu, res);
                 else content.content(menu, res);
             })
         }else {
             console.log('first insert test');
             db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, data, tag], function (err2, result) {
                 if (err2) throw err2;
-                if(menu=='content1') content.content1(menu, res);
+                if(menu === 'content1') content.content1(menu, res);
                 else content.content(menu, res);
             })
         }
@@ -189,7 +189,7 @@ router.post('/remove', function(req,res){
 
             db.query(`select * from ${remName} where name=?`, ['1'], function (err2, result) {
                 if(err2) throw err2;
-                if(remName=='content1') content.content1(remName, res);
+                if(remName === 'content1') content.content1(remName, res);
                 else content.content(remName, res);
             })
         }

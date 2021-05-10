@@ -26,15 +26,18 @@
             <div id="header_title">반달섬 마리나 큐브</div>
         </div>
         <nav class="header_nav">
-            <ul class="menu_list">
-                <li class="menu" id="menu_1"><a href="javascript:void(0)">반달섬 마리나 큐브</a></li>
-                <li class="menu" id="menu_2"><a href="javascript:void(0)">사업개요</a></li>
-                <li class="menu" id="menu_3"><a href="javascript:void(0)">교통안내</a></li>
-                <li class="menu" id="menu_4"><a href="javascript:void(0)">고객접수</a></li>
-                <li class="menu" id="menu_5"><a href="javascript:void(0)">평면도</a></li>
-                <li class="menu" id="menu_6"><a href="javascript:void(0)">커뮤니티</a></li>
-                <li class="menu" id="menu_7"><a href="javascript:void(0)">주변입지</a></li>
-            </ul>
+            <div class="menu_container">
+                <button class="menu-toggle" onclick="toggleHedaer()" expanded="false">Menu</button>
+                <ul class="menu_list">
+                    <li class="menu" id="menu_1"><a href="javascript:void(0)">반달섬 마리나 큐브</a></li>
+                    <li class="menu" id="menu_2"><a href="javascript:void(0)">사업개요</a></li>
+                    <li class="menu" id="menu_3"><a href="javascript:void(0)">교통안내</a></li>
+                    <li class="menu" id="menu_4"><a href="javascript:void(0)">고객접수</a></li>
+                    <li class="menu" id="menu_5"><a href="javascript:void(0)">평면도</a></li>
+                    <li class="menu" id="menu_6"><a href="javascript:void(0)">커뮤니티</a></li>
+                    <li class="menu" id="menu_7"><a href="javascript:void(0)">주변입지</a></li>
+                </ul>
+            </div>
         </nav>
     </div>
     <div class="body-area">
@@ -44,10 +47,20 @@
     </div>
     <div class="footer-area">
         <div class="admin_login"><a href="./join">관리자</a></div>
+        <div class="admin_logout"><a href="./join">로그아웃</a></div>
     </div>
     <script>
-        const allMenu = document.querySelectorAll('.menu');
         window.onload = function(){
+            $(window).resize(function(){
+                if(window.innerWidth > 767){
+                    $(".menu_list").css('display','flex');
+                    $(".menu-toggle").attr('expanded','false');
+                } else {
+                    $(".menu_list").css('display','none');
+                }
+            });
+            checkAdmin();
+            const allMenu = document.querySelectorAll('.menu');
             allMenu[0].classList.add('active');
             getContent(allMenu[0].id);
 
@@ -74,9 +87,13 @@
                 if(xhr.responseText!='nodata'){
                     const main_content = document.querySelector('.main-content');
                     main_content.innerHTML = xhr.responseText;
-                    addEventsForContent();
+                    if($("input[name='adCheck']").length>0 && $("input[name='adCheck']")[0].value=='checked'){
+                        addEventsForContent();
+                    }
                 }
-                addEmptyContent();
+                if($("input[name='adCheck']").length>0 && $("input[name='adCheck']")[0].value=='checked'){
+                    addEmptyContent();
+                }
             });
         }
 
@@ -122,7 +139,6 @@
 
         function uploadContents(parent){
             const menu = parent.id.split("-")[0];
-            console.log(parent.children[0].className);
             parent.children[0].style.display ="none";
             const addImg = $("<img>").attr({class:'addImg',src:'./images/이미지.png',style:'width:100px;'}).appendTo(parent);
             const addText = $("<img>").attr({class:'addText',src:'./images/글.png',style:'width:52px;'}).appendTo(parent);
@@ -156,8 +172,6 @@
                 const parent = this.parentElement;
                 parent.className = 'emptyContents';
                 parent.style.height = 'auto';
-                console.log(parent.id);
-                const contentName = 'content'+parent.id.substring(5,parent.id.length)
                 this.remove();
                 $(".addImg").remove();
 
@@ -336,6 +350,35 @@
             });
         }
 
+        function checkAdmin(){
+            const data = {'loginCheck':'main'};
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST" , '/chkAdmin' );
+            // xhr.setRequestHeader('Content-Type',"application/json");
+            xhr.send(data);
+
+            xhr.addEventListener('load', function(){
+                var headArea = $(".header-area")
+                if(JSON.parse(xhr.responseText) === "true"){
+                    if($("input[name='adCheck']").length>0) {
+                        $("input[name='adCheck']").value == 'checked';
+                    } else {
+                        $("<input>").attr({type: 'hidden', name: 'adCheck', value: 'checked'}).appendTo(headArea[0]);
+                    }
+                    $(".admin_login").css('display','none');
+                    $(".admin_logout").css('display','');
+                } else if(JSON.parse(xhr.responseText) === "false") {
+                    if($("input[name='adCheck']").length>0) {
+                        $("input[name='adCheck']").value == 'notChecked';
+                    } else {
+                        $("<input>").attr({type: 'hidden', name: 'adCheck', value: 'notChecked'}).appendTo(headArea[0]);
+                    }
+                    $(".admin_logout").css('display','none');
+                    $(".admin_login").css('display','');
+                }
+            });
+        }
+
         function sendAjax(url, data, type){
             var xhr = new XMLHttpRequest();
             xhr.open("POST" , url );
@@ -345,9 +388,21 @@
             xhr.addEventListener('load', function(){
                 const main_content = document.querySelector('.main-content');
                 main_content.innerHTML = xhr.responseText;
-                addEventsForContent();
-                addEmptyContent();
+                if($("input[name='adCheck']").length>0 && $("input[name='adCheck']")[0].value=='checked') {
+                    addEventsForContent();
+                    addEmptyContent();
+                }
             });
+        }
+
+        function toggleHedaer(){
+            if ($(".menu-toggle").attr('expanded') == 'false') {
+                $(".menu-toggle").attr('expanded', 'true');
+                $(".menu_list").css('display', 'block');
+            } else {
+                $(".menu-toggle").attr('expanded', 'false');
+                $(".menu_list").css('display', 'none');
+            }
         }
     </script>
 </body>

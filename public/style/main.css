@@ -30,8 +30,8 @@ body {
     padding-left: 0;
     list-style: none;
     display: -webkit-box;
-    max-width: 600px;
-    margin: 0 500px;
+    margin: 0 auto;
+    width: 1000px;
 }
 
 .header_nav {
@@ -258,14 +258,91 @@ input[name='content_img'], input[type='submit'] {
     border-radius: 5px;
 }
 
-.admin_login {
+.admin_login, .admin_logout {
     display: block;
     padding: 30px 15px 10px 15px;
     text-align: right;
 }
-.admin_login a{
+.admin_login a, .admin_logout a{
     color: white;
     outline: none;
     text-decoration: none;
     font-size: 12px;
+}
+.menu_container {
+    display:block;
+    width: 100%;
+}
+/* Small menu. */
+@media screen and (min-width:768px) {
+    .menu-toggle,
+    .dropdown-toggle {
+        display: none;
+    }
+
+    .main-navigation ul {
+        display: block;
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .menu-toggle {
+        border-radius: 3px;
+        display: block;
+        font-size: 20px;
+        line-height: 1.3;
+        margin: 15px auto;
+        padding: 7px 20px 5px 15px;
+        background: rgb(41 191 108);
+        color: white;
+        border: 1px solid #9ecb89;
+    }
+    .menu-toggle:hover, .menu-toggle:focus {
+        background-color: #349861;
+        color: white;
+    }
+
+    .header_nav ul {
+        background: rgb(33,89,104) none repeat scroll 0 0;
+    }
+    .menu_container {
+        display:block;
+        width: 100%;
+        background-color: rgb(33,89,104);
+    }
+
+    .menu_list {
+        padding-left: 0;
+        list-style: none;
+        display: none;
+        margin: 0 auto;
+        width: 90%;
+        position: absolute;
+        z-index: 9999;
+        border: 1px solid #dddddd;
+    }
+
+    .menu {
+        display: block;
+        float: inherit;
+        clear: both;
+        margin: 0 0 0 1px;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .menu a {
+        display: block;
+        padding: 10px 15px 10px 15px;
+        color: inherit;
+        outline: none;
+        text-decoration: none;
+        font-size: 16px;
+        font-family: Georgia, "맑은 고딕", serif;
+    }
+
+    #menu_1 {
+        border-left: none;
+    }
 }

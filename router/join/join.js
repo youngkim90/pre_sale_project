@@ -4,7 +4,13 @@ const router =express.Router();
 const path = require('path');
 
 router.get('/', function(req,res){
-    res.sendFile(path.join(__dirname,'../../public/join.html'));
+    if(req.user && req.user == '1'){
+        req.logout();
+        console.log('logout test');
+        res.redirect('/');
+    } else {
+        res.sendFile(path.join(__dirname,'../../public/join.html'));
+    }
 });
 
 router.get('/login', function(req,res){
