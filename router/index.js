@@ -3,7 +3,7 @@ const router =express.Router();
 const path = require('path');
 const main = require('./main/main');
 const join = require('./join/join');
-const passport = require('passport');
+var passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const db = require('./db');
 
