@@ -17,7 +17,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.listen(8000, function(){
+app.listen(3000, function(){
 })
 
 app.use(bodyParser.json())

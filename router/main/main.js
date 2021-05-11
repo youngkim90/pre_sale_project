@@ -72,7 +72,6 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
     const menu = req.body.folder;
     const num = req.body.num;
     const size = req.body.size;
-    console.log(size);
     const fileName = req.file.filename;
 
     db.query(`select * from ${menu}`, function(err,rows) {
@@ -171,7 +170,6 @@ router.post('/remove', function(req,res){
             db.query(`select*from ${remName} where name=?`, [remNum], function (err, result) {
                 if (err) throw err;
                 filePath =path.join(__dirname,`../../public/images/${remName}/${result[0].content}`);
-                console.log(filePath);
                 fs.unlink(filePath, function(error){
                     if(error) return '삭제할 수 없습니다.';
                     console.log('file remove');
