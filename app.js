@@ -8,6 +8,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 var flash = require('connect-flash');
+app.createServer(express.logger());
 app.use(flash());
 //login session
 app.use(session({
