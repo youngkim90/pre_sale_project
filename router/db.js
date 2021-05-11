@@ -1,5 +1,4 @@
 const mysql = require('mysql');
-const sync_mysql = require('sync-mysql');
 
 const db = mysql.createConnection({
     host : 'localhost',
