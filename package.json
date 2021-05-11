@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "private": true,
-  "homepage": "https://youngkim90.github.io/pre_sale_project/",
   "scripts": {
     "start": "node index.js"
   },
