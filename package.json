@@ -1,7 +1,6 @@
 {
-  "name": "pre_sale_project",
+  "name": "passport-local",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "private": true,
   "scripts": {
@@ -28,5 +27,14 @@
   },
   "engines": {
     "node": "14.16.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youngkim90/pre_sale_project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/youngkim90/pre_sale_project/issues"
+  },
+  "homepage": "https://github.com/youngkim90/pre_sale_project#readme",
+  "description": ""
 }

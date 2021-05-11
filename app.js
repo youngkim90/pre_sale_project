@@ -5,7 +5,6 @@ const cors = require('cors');
 const router = require('./router/index');
 //login session
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 var flash = require('connect-flash');
 app.use(flash());
