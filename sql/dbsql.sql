@@ -18,6 +18,13 @@ create table userTB(
 
 insert into userTB (user, passwd) values ('admin', 'sejin123');
 
+create table question(
+    id int(11) not null auto_increment,
+    name varchar(20) not null,
+    phone varchar(30) not null,
+    quest varchar(200) null,
+    primary key(id));
+
 create table content1(
    id int(11) not null auto_increment,
    name varchar(20) null,

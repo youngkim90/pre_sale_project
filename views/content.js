@@ -2,6 +2,7 @@ const db = require('../router/db');
 const fs = require('fs');
 
 module.exports = {
+    // main content
     content:function(data,res) {
         const query = db.query(`select * from ${data}`, function (err, rows) {
             if(err) throw err;
@@ -19,35 +20,60 @@ module.exports = {
             }
         });
     },
-    content1:function(data, res) {
-        const files = getFileList('./public/images/slide');
-
-        db.query('select * from content1', function (err, rows) {
-            if (err) throw err;
-            const sortRows = sortWithName(rows);
-            const slideList = files;
-            var imgList = `<ul>`;
-            for (var i = 0; i < slideList.length; i++) {
-                imgList += `<li><img class="slideImg" src="./images/slide/${slideList[i]}"/></li>`;
-            }
-            imgList += `</ul>`;
-            var html = `
-                <div class="slide">
-                    ${imgList}
-                </div>
-            `;
-            if(rows.length>0) {
-                for (var j = 0; j < sortRows.length; j++) {
-                    const tag = sortRows[j].tag;
-                    const content = sortRows[j].content;
-                    const rowName = data + "-" + sortRows[j].name;
-                    const row = getContentHTML(data,sortRows[j]);
-                    html += row;
-                }
-            }
-            res.end(html);
-        })
+    content4:function(data, res){
+        var html = `
+            <div class="imgContent">
+                <img src="./images/content4/고객접수.png" style="max-width:90%"></img>
+            </div>
+            <form class="receptionForm">
+                <div><div class="contTitle">성함<span style="color:red">*</span></div>
+                <div class="contInput"><input type="text" class="custInfo" id="info1"></input></div></div></br>             
+                <div><div class="contTitle">연락처<span style="color:red">*</span></div>
+                <div class="contInput"><input type="text" class="custInfo" id="info2"></div></div>   </br>             
+                <div style="left:7%;position:relative;"><div class="contTitle">문의사항<span style="color:red">*</span></div>
+                <div class="contInput"><textarea class="questArea" id="info3" cols="50" rows="5"></textarea></div></br>
+                
+                <div style="top:50px;position:relative;"><div class="agreeCheck"><input type="checkbox" id="agreeChk" name="custAgree"></div>
+                <div class="agreeText">개인정보 수집 및 이용 동의 </div></div></br>
+                
+                <div class="submit_btn">문의하기</div>
+            </form>
+        `;
+        res.end(html);
     },
+
+    //not use
+    // content1:function(data, res) {
+    //     const files = getFileList('./public/images/slide');
+    //
+    //     db.query('select * from content1', function (err, rows) {
+    //         if (err) throw err;
+    //         const sortRows = sortWithName(rows);
+    //         const slideList = files;
+    //         var imgList = `<ul>`;
+    //         for (var i = 0; i < slideList.length; i++) {
+    //             imgList += `<li><img class="slideImg" src="./images/slide/${slideList[i]}"/></li>`;
+    //         }
+    //         imgList += `</ul>`;
+    //         var html = `
+    //             <div class="slide">
+    //                 ${imgList}
+    //             </div>
+    //         `;
+    //         if(rows.length>0) {
+    //             for (var j = 0; j < sortRows.length; j++) {
+    //                 const tag = sortRows[j].tag;
+    //                 const content = sortRows[j].content;
+    //                 const rowName = data + "-" + sortRows[j].name;
+    //                 const row = getContentHTML(data,sortRows[j]);
+    //                 html += row;
+    //             }
+    //         }
+    //         res.end(html);
+    //     })
+    // },
+
+    //foot contents
     footContent: function(res){
         var html = `<ul class="foot_list">
                         <li class="footMenu" id="footmenu_1"><a href="javascript:void(0)">반달섬 마리나 큐브</a></li>
@@ -66,6 +92,7 @@ module.exports = {
     }
 }
 
+//sort data
 function sortWithName(data){
     var rows = data;
     rows.sort(function (a, b) {
@@ -76,6 +103,7 @@ function sortWithName(data){
     return rows;
 }
 
+//get content
 function getContentHTML(data, rows){
     const tag = rows.tag;
     const content = rows.content;
@@ -114,6 +142,7 @@ function getContentHTML(data, rows){
     return html;
 }
 
+//get file list
 function getFileList(path){
     const files = new Array();
     fs.readdir(`${path}`, function(err,fileList){

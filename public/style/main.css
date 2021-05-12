@@ -21,7 +21,7 @@ body {
 
 .footer-area {
     width: 100%;
-    height: 90px;
+    height: 100px;
     background-color: rgb(33,89,104);
     border-top: 5px solid rgb(48, 131, 153);
     text-align: center;
@@ -78,7 +78,7 @@ body {
 
 #header_title{
     position: absolute;
-    left: 200px;
+    left: 20%;
     top: 42px;
     font-size: 30px;
     color: rgb(33,89,104);
@@ -97,10 +97,10 @@ body {
 }
 
 .topbar_menu {
-    width :500px;
     color: inherit;
     position: relative;
-    left: 200px;
+    left: 15%;
+    width: 600px;
 }
 
 .topbar_menu ul {
@@ -339,6 +339,7 @@ input[name='content_img'], input[type='submit'] {
         position: absolute;
         z-index: 9999;
         border: 1px solid #dddddd;
+        left: 5%;
     }
 
     .menu {
@@ -397,4 +398,79 @@ input[name='content_img'], input[type='submit'] {
     /*transform: translate(-10%,-50%);*/
     font-size: 12px;
     margin: 5px;
+}
+
+.imgContent {
+    margin-top: 50px;
+    position: relative;
+    display: block;
+}
+
+.receptionForm {
+    margin: 0;
+    max-width: 90%;
+    position: relative;
+    padding: 30px;
+    background-color: #e0ffed;
+    height: 320px;
+    margin-bottom: 20px;
+}
+
+.contTitle {
+    display: inline-block;
+    position: relative;
+    width: 30%;
+    text-align: left;
+    font-size: 19px;
+    top: 5px;
+
+}
+
+.contInput{
+    display: inline-block;
+    position: relative;
+}
+
+.custInfo{
+    width: 250px;
+    height: 20px;
+}
+
+.agreeCheck, .agreeText{
+    display: inline-block;
+    left: -18%;
+    position: relative;
+}
+
+.submit_btn {
+    border: 1px solid lightgrey;
+    width: 120px;
+    height: 35px;
+    left: 15%;
+    top: 50px;
+    position: relative;
+    border-radius: 10px;
+    background-color: white;
+    padding-top: 13px;
+    color: green;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+.submit_btn:hover {
+    background-color: #f1f1f1;;
+}
+.submit_btn:active {
+    background-color: lightgrey;
+    box-shadow: 1px 1px 1px;
+    left: 15.5%;
+    top: 51px;
+    color: black;
+    border-color: grey;
+}
+
+.questArea {
+    position: relative;
+    top: 30px;
+    resize: none;
 }

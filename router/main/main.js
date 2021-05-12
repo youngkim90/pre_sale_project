@@ -10,6 +10,7 @@ const db = require('../db');
 const multer = require('multer');
 const fs = require('fs');
 
+//image upload to folder
 var upload = multer({
     storage: multer.diskStorage({
         destination(req, file, cb) {
@@ -23,20 +24,23 @@ var upload = multer({
     })
 });
 
+//initial page
 router.get('/', function(req,res){
     res.sendFile(path.join(__dirname,'../public/main.html'));
 });
 
+//call content page
 router.post('/content', function(req,res){
     if(req.body){
         const data = req.body.data;
         const tableName = 'content' + data.split("_")[1];
-        if(data === 'menu_1') content.content1(tableName, res);
-        else if(data === 'footContent') content.footContent(res);
+        if(data === 'footContent') content.footContent(res);
+        else if(tableName === 'content4') content.content4(tableName, res);
         else content.content(tableName, res);
     }
 })
 
+//update contents
 router.post('/update', function(req,res){
     var data = req.body.editData;
     var rowNum = req.body.num;
@@ -56,8 +60,7 @@ router.post('/update', function(req,res){
         if(err) throw err
         if(rows.length>0){
             const query = db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [num, data, tag, align, num], function (err2, result) {
-                if(data === 'content1') content.content1(menu, res);
-                else content.content(menu, res);
+                content.content(menu, res);
             })
         } else {
             const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, data, tag, align], function (err2, result) {
@@ -68,6 +71,7 @@ router.post('/update', function(req,res){
     })
 })
 
+//upload image
 router.post("/uploadImg", upload.single("content_img"),function(req, res) {
     const menu = req.body.folder;
     const num = req.body.num;
@@ -84,30 +88,28 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
             });
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
-                    console.log('update test')
                     db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
+                        console.log('update complete')
                     })
                 }
             }
-            console.log('insert test');
             const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, fileName, 'IMG', size], function (err2, result) {
                 if(err2) throw err2;
-                if(menu === 'content1') content.content1(menu, res);
-                else content.content(menu, res);
+                console.log('insert complete');
+                content.content(menu, res);
             })
         }else {
-            console.log('first insert test');
             db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, fileName, 'IMG'], function (err2, result) {
                 if (err2) throw err2;
-                if(menu === 'content1') content.content1(menu, res);
-                else content.content(menu, res);
+                content.content(menu, res);
+                console.log('first insert complete');
             })
         }
-        console.log('img upload complete');
     });
 });
 
+//upload text
 router.post("/uploadText",function(req, res) {
     var data = req.body.editData;
     const rowNum = req.body.num;
@@ -128,32 +130,29 @@ router.post("/uploadText",function(req, res) {
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
             for (var i = 0; i < rows.length; i++) {
-                    console.log('origin = '+ rows[i].name+'   new = '+ (Number(num) + 1));
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
-                    console.log('update test')
                     db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
+                        console.log('update complete')
                     })
                 }
             }
-            console.log('insert test');
             db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, data, tag, align], function (err2, result) {
                 if(err2) throw err2;
-                if(menu === 'content1') content.content1(menu, res);
-                else content.content(menu, res);
+                content.content(menu, res);
+                console.log('insert complete');
             })
         }else {
-            console.log('first insert test');
             db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, data, tag], function (err2, result) {
                 if (err2) throw err2;
-                if(menu === 'content1') content.content1(menu, res);
-                else content.content(menu, res);
+                content.content(menu, res);
+                console.log('first insert complete');
             })
         }
-        console.log('text upload complete');
     });
 });
 
+//remove content
 router.post('/remove', function(req,res){
     const remName = req.body.remMenu;
     const remNum = req.body.remNum;
@@ -172,29 +171,50 @@ router.post('/remove', function(req,res){
                 filePath =path.join(__dirname,`../../public/images/${remName}/${result[0].content}`);
                 fs.unlink(filePath, function(error){
                     if(error) return '삭제할 수 없습니다.';
-                    console.log('file remove');
+                    console.log('file remove complete');
                 });
             });
             db.query(`delete from ${remName} where name=?`, [remNum], function (err2, result) {
                 if (err2) throw err2;
-                console.log('remove test');
+                console.log('remove complete');
             });
             for (var i = 0; i < rows.length; i++) {
-                console.log('rowNum = ' + rows[i].name + '   removeNum = ' + (Number(remNum)));
                 if (Number(rows[i].name) > Number(remNum)) {
-                    console.log('update test')
                     db.query(`update ${remName} set name=? where name=?`, [Number(rows[i].name) - 1, rows[i].name], function (err2, result) {
                         if (err2) throw err2;
+                        console.log('update complete')
                     })
                 }
             }
 
             db.query(`select * from ${remName} where name=?`, ['1'], function (err2, result) {
                 if(err2) throw err2;
-                if(remName === 'content1') content.content1(remName, res);
-                else content.content(remName, res);
+                content.content(remName, res);
             })
         }
+    });
+});
+
+router.post('/question', function(req,res) {
+    const custName = req.body.name;
+    const custPhone = req.body.phone;
+    var quest = req.body.quest;
+    var emailData = {
+        'from_name': custName,
+        'message': quest,
+        'phone': custPhone
+    }
+
+    if(quest.indexOf('\r\n')!=-1){
+        quest = quest.split('\r\n').join('<br/>');
+    }
+    if(quest.indexOf('\n')!=-1){
+        quest = quest.split('\n').join('<br/>');
+    }
+
+    db.query(`insert into question (name,phone,quest) values (?,?,?)`, [custName,custPhone,quest], function (err, result) {
+        if(err) return err;
+        res.json(emailData);
     });
 });
 
