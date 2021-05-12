@@ -42,6 +42,13 @@ function getContent(data) {
             main_content.innerHTML = xhr.responseText;
             if($("input[name='adCheck']").length>0 && $("input[name='adCheck']")[0].value=='checked'){
                 addEventsForContent();
+            } else {
+                $(".slide").mouseover(function(){
+                    $(".slide").attr('class','slide is-paused');
+                });
+                $(".slide").mouseout(function(){
+                    $(".slide").attr('class','slide');
+                });
             }
         }
         if($("input[name='adCheck']").length>0 && $("input[name='adCheck']")[0].value=='checked'){
@@ -166,7 +173,7 @@ function uploadContents(parent){
         $("<input>").attr({type:'radio', name:'chk_align', id:'align_2', value:'2', style:'left:20%;position:relative;',checked:true}).appendTo(editForm);
         $("<label>").attr({for:'align_2',style:'left:20%;position:relative;'}).text('가운데').appendTo(editForm);
 
-        $("<textarea>").attr({class:'editContent',rows:'3',cols:'100',name:'editData'}).appendTo(editForm);
+        $("<textarea>").attr({class:'editContent',rows:'4',style:'width:100%',name:'editData'}).appendTo(editForm);
         $("<input>").attr({type:'hidden', name:'num', value:contentName}).appendTo(editForm);
 
 
@@ -243,7 +250,7 @@ function addEventsForContent(){
             editBtn[0].addEventListener('click',function(event){
                 const parent = event.path[2];
                 const content = parent.children[1];
-                parent.className = 'contents editMode';
+                // parent.className = 'contents editMode';
                 $("button.remove").remove();
                 this.remove();
                 const editForm = $("<form>").attr({class:'editForm',action:'/main/update', method:'POST'});
@@ -283,7 +290,7 @@ function addEventsForContent(){
                     $("<label>").attr({for:'align_1',style:'left:20%;position:relative;'}).text('왼쪽').appendTo(editForm);
                     $("<input>").attr({type:'radio', name:'chk_align', id:'align_2', value:'2', style:'left:20%;position:relative;',checked:true}).appendTo(editForm);
                     $("<label>").attr({for:'align_2',style:'left:20%;position:relative;'}).text('가운데').appendTo(editForm);
-                    $("<textarea>").attr({class:'editContent',rows:'3',cols:'100',name:'editData'})
+                    $("<textarea>").attr({class:'editContent',rows:'4',style:'width:100%',name:'editData'})
                         .html(content.innerHTML.replaceAll("<br>","\n")).appendTo(editForm);
                     $("<input>").attr({type:'hidden', name:'tag', value:content.tagName}).appendTo(editForm);
                     $("<input>").attr({type:'hidden', name:'num', value:parent.id}).appendTo(editForm);
@@ -330,7 +337,7 @@ function addEventsForContent(){
             removeBtn[0].addEventListener('click',function(event) {
                 const parent = event.path[2];
                 const content = parent.children[0];
-                parent.className = 'contents editMode';
+                // parent.className = 'contents editMode';
                 $("button.edit").remove();
                 this.remove();
                 if($(".emptyContents").length==1){
