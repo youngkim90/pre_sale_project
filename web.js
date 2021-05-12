@@ -1,35 +1,37 @@
 //require
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
+const web = express();
 const cors = require('cors');
 const router = require('./router/index');
+const PORT = 8001
 
 //login session
 const passport = require('passport');
 const session = require('express-session');
 var flash = require('connect-flash');
-app.use(flash());
-app.use(session({
+web.use(flash());
+web.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+web.use(passport.initialize());
+web.use(passport.session());
 //login session
 
 //server start
-app.listen(3000, function(){
+web.listen(PORT, function(){
 })
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
-app.use(express.static('public'))
-app.use(express.static('views'))
-app.use(cors())
+web.set('views', __dirname + '/views');
+web.use(bodyParser.json())
+web.use(bodyParser.urlencoded({extended:true}))
+web.use(express.static('public'))
+web.use(express.static('views'))
+web.use(cors())
 
 //route
-app.use(router);
+web.use(router);
 
 

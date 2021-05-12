@@ -1,10 +1,10 @@
 {
   "name": "passport-local",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "web.js",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node web.js"
   },
   "keywords": [],
   "author": "",
