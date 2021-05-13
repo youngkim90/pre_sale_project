@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const web = express();
+const path = require('path');
 const cors = require('cors');
 const router = require('./router/index');
 const PORT = 8001
@@ -19,7 +20,8 @@ web.use(session({
 web.use(passport.initialize());
 web.use(passport.session());
 //login session
-web.set('public', __dirname + '/public');
+web.set('view engine', __dirname + 'pug');
+web.set('views', path.join(__dirname,'views'));
 
 //server start
 web.listen(PORT, function(){
@@ -27,8 +29,9 @@ web.listen(PORT, function(){
 
 web.use(bodyParser.json())
 web.use(bodyParser.urlencoded({extended:true}))
-web.use(express.static('public'))
-web.use(express.static('views'))
+// web.set('public', __dirname + '/public');
+web.use(express.static(path.join(__dirname,'public')));
+// web.use(express.static('views'))
 web.use(cors())
 
 //route
