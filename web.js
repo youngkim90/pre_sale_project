@@ -27,7 +27,7 @@ web.listen(PORT, function(){
 
 web.use(bodyParser.json())
 web.use(bodyParser.urlencoded({extended:true}))
-// web.use(express.static('public'))
+web.use(express.static('public'))
 // web.use(express.static('views'))
 web.use(cors())
 
