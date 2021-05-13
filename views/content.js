@@ -30,8 +30,8 @@ module.exports = {
                 <div class="contInput"><input type="text" class="custInfo" id="info1"></input></div></div></br>             
                 <div><div class="contTitle">연락처<span style="color:red">*</span></div>
                 <div class="contInput"><input type="text" class="custInfo" id="info2"></div></div>   </br>             
-                <div style="left:7%;position:relative;"><div class="contTitle">문의사항<span style="color:red">*</span></div>
-                <div class="contInput"><textarea class="questArea" id="info3" cols="50" rows="5"></textarea></div></br>
+                <div style="left:3%;position:relative;"><div class="contTitle">문의사항<span style="color:red">*</span></div>
+                <div class="contInput"><textarea class="questArea" id="info3" cols="40" rows="5"></textarea></div></br>
                 
                 <div style="top:50px;position:relative;"><div class="agreeCheck"><input type="checkbox" id="agreeChk" name="custAgree"></div>
                 <div class="agreeText">개인정보 수집 및 이용 동의 </div></div></br>
