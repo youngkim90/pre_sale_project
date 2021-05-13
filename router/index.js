@@ -8,7 +8,7 @@ const localStrategy = require('passport-local').Strategy;
 const db = require('./db');
 
 router.get('/', function(req,res){
-    console.log(path.join(__dirname,'../public/main.html')));
+    console.log(path.join(__dirname,'../public/main.html'));
     res.sendFile(path.join(__dirname,'../public/main.html'));
 });
 router.get('/logCheck', function(req,res){
