@@ -19,7 +19,7 @@ web.use(session({
 web.use(passport.initialize());
 web.use(passport.session());
 //login session
-web.set('views', __dirname + '/views');
+// web.set('views', __dirname + '/views');
 
 //server start
 web.listen(PORT, function(){
@@ -28,7 +28,7 @@ web.listen(PORT, function(){
 web.use(bodyParser.json())
 web.use(bodyParser.urlencoded({extended:true}))
 web.use(express.static('public'))
-// web.use(express.static('views'))
+web.use(express.static('views'))
 web.use(cors())
 
 //route
