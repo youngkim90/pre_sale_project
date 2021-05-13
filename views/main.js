@@ -458,21 +458,7 @@ function getFooter(){
                 getContent(menuId);
             })
         }
-        const allMenu = document.querySelectorAll('.menu');
-        allMenu[0].classList.add('active');
-        getContent(allMenu[0].id);
+        checkAdmin();
 
-        for(var i=0; i<allMenu.length; i++){
-            allMenu[i].addEventListener('click', function(){
-                $("li[class='menu active']").attr('class','menu');
-                this.classList.add('active');
-                const menuId = this.id
-                if($(".menu-toggle").attr('expanded') === "true"){
-                    $(".menu-toggle").attr('expanded','false');
-                    $(".menu_list").css('display','none');
-                }
-                getContent(menuId);
-            })
-        }
     });
 }
