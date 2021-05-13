@@ -19,7 +19,7 @@ web.use(session({
 web.use(passport.initialize());
 web.use(passport.session());
 //login session
-// web.set('views', __dirname + '/views');
+web.set('public', __dirname + '/public');
 
 //server start
 web.listen(PORT, function(){
