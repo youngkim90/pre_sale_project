@@ -1,11 +1,11 @@
 const mysql = require('mysql');
 
 const db = mysql.createConnection({
-    host : 'marinacube.cafe24app.com',
+    host : 'localhost',
     port : '3306',
-    user : 'youngkim90',
-    password : 'motor2021',
-    database : 'youngkim90'
+    user : 'admin_user',
+    password : 'sejin123',
+    database : 'presale'
 })
 db.connect();
 
