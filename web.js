@@ -5,7 +5,7 @@ const web = express();
 const path = require('path');
 const cors = require('cors');
 const router = require('./router/index');
-const PORT = 8001
+const PORT = 3000
 
 //login session
 const passport = require('passport');
@@ -29,10 +29,8 @@ web.listen(PORT, function(){
 
 web.use(bodyParser.json())
 web.use(bodyParser.urlencoded({extended:true}))
-// web.set('public', __dirname + '/public');
 web.use(express.static(path.join(__dirname,'public')));
 web.use(express.static(path.join(__dirname,'views')));
-// web.use(express.static('views'))
 web.use(cors())
 
 //route
