@@ -9,7 +9,7 @@ window.onload = function(){
             $(".menu_list").css('display','none');
         }
     });
-    checkAdmin();
+    // checkAdmin();
     const allMenu = document.querySelectorAll('.menu');
     allMenu[0].classList.add('active');
     getContent(allMenu[0].id);
@@ -509,5 +509,6 @@ function getFooter(){
                 getContent(menuId);
             })
         }
+        checkAdmin();
     });
 }

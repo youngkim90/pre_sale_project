@@ -80,8 +80,13 @@ body {
     position: absolute;
     left: 20%;
     top: 42px;
-    font-size: 30px;
+}
+
+#header_title a {
+    outline: none;
+    text-decoration: none;
     color: rgb(33,89,104);
+    font-size: 30px;
     font-weight: 550;
 }
 
@@ -414,6 +419,8 @@ input[name='content_img'], input[type='submit'] {
     background-color: #e0ffed;
     height: 320px;
     margin-bottom: 20px;
+    border: 2px solid #66c9c0;
+    border-radius: 5px;
 }
 
 .contTitle {
