@@ -31,6 +31,7 @@ web.use(bodyParser.json())
 web.use(bodyParser.urlencoded({extended:true}))
 // web.set('public', __dirname + '/public');
 web.use(express.static(path.join(__dirname,'public')));
+web.use(express.static(path.join(__dirname,'views')));
 // web.use(express.static('views'))
 web.use(cors())
 
