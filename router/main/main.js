@@ -14,7 +14,7 @@ const fs = require('fs');
 var upload = multer({
     storage: multer.diskStorage({
         destination(req, file, cb) {
-            cb(null, `public/images/${req.body.folder}`);
+            cb(null, `/home/hosting_users/youngkim90/apps/youngkim90_marinacube/public/images/${req.body.folder}`);
         },
         filename(req, file, cb) {
             const extension = path.extname(file.originalname);  //확장자
@@ -168,7 +168,7 @@ router.post('/remove', function(req,res){
             });
             db.query(`select*from ${remName} where name=?`, [remNum], function (err, result) {
                 if (err) throw err;
-                filePath =path.join(__dirname,`../../public/images/${remName}/${result[0].content}`);
+                filePath =`/home/hosting_users/youngkim90/apps/youngkim90_marinacube/public/images/${remName}/${result[0].content}`;
                 fs.unlink(filePath, function(error){
                     if(error) return '삭제할 수 없습니다.';
                     console.log('file remove complete');
