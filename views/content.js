@@ -29,7 +29,7 @@ module.exports = {
                 <div><div class="contTitle">성함<span style="color:red">*</span></div>
                 <div class="contInput"><input type="text" class="custInfo" id="info1"></input></div></div></br>             
                 <div><div class="contTitle">연락처<span style="color:red">*</span></div>
-                <div class="contInput"><input type="text" class="custInfo" id="info2"></div></div>   </br>             
+                <div class="contInput"><input type="text" class="custInfo" id="info2"></div></div></br>             
                 <div style="position:relative;"><div class="contTitle">문의사항<span style="color:red">*</span></div>
                 <div class="contInput"><textarea class="questArea" id="info3" rows="5"></textarea></div></br>
                 
