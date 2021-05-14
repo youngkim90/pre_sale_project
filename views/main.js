@@ -8,25 +8,9 @@ window.onload = function(){
             $(".menu_list").css('display','none');
         }
     });
-    // checkAdmin();
-    // const allMenu = document.querySelectorAll('.menu');
-    // allMenu[0].classList.add('active');
-    // getContent(allMenu[0].id);
-
-    // for(var i=0; i<allMenu.length; i++){
-    //     allMenu[i].addEventListener('click', function(){
-    //         $("li[class='menu active']").attr('class','menu');
-    //         this.classList.add('active');
-    //         const menuId = this.id
-    //         if($(".menu-toggle").attr('expanded') === "true"){
-    //             $(".menu-toggle").attr('expanded','false');
-    //             $(".menu_list").css('display','none');
-    //         }
-    //         getContent(menuId);
-    //     })
-    // }
 }
 
+//get main contents
 function getContent(data) {
     $(".main-content").empty();
     var data = {'data' : data};
@@ -37,16 +21,74 @@ function getContent(data) {
     xhr.send(data);
 
     xhr.addEventListener('load', function(){
-        if(xhr.responseText!='nodata'){
-            const main_content = document.querySelector('.main-content');
-            main_content.innerHTML = xhr.responseText;
-            if($("input[name='adCheck']").length>0 && $("input[name='adCheck']")[0].value=='checked'){
-                addEventsForContent();
+        if($("li[class='menu active']")[0].id == 'menu_4'){
+            addEventsForCustReception(xhr.responseText);
+        } else {
+            if (xhr.responseText != 'nodata') {
+                const main_content = document.querySelector('.main-content');
+                main_content.innerHTML = xhr.responseText;
+                if ($("input[name='adCheck']").length > 0 && $("input[name='adCheck']")[0].value == 'checked') {
+                    addEventsForContent();
+                } else {
+                    $(".slide").mouseover(function () {
+                        $(".slide").attr('class', 'slide is-paused');
+                    });
+                    $(".slide").mouseout(function () {
+                        $(".slide").attr('class', 'slide');
+                    });
+                }
+            }
+            if ($("input[name='adCheck']").length > 0 && $("input[name='adCheck']")[0].value == 'checked') {
+                addEmptyContent();
             }
         }
-        if($("input[name='adCheck']").length>0 && $("input[name='adCheck']")[0].value=='checked'){
-            addEmptyContent();
+    });
+}
+
+function addEventsForCustReception(html){
+    const main_content = document.querySelector('.main-content');
+    main_content.innerHTML = html;
+
+    $("div.submit_btn").on("click",function(){
+        const info1 = $("#info1").val();
+        const info2 = $("#info2").val();
+        const info3 = $("#info3").val();
+        const cheInfo = $("input:checkbox[id='agreeChk']").is(':checked');
+        if(!info1 || !info2 || !info3){
+            alert('내용을 모두 입력해주세요');
+            return
         }
+        if(!cheInfo){
+            alert('개인정보 수집의 동의가 필요합니다.');
+            return
+        }
+        var data = {'name' : info1,
+            'phone' : info2,
+            'quest' : info3
+        };
+        data = JSON.stringify(data);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '../main/question');
+        xhr.setRequestHeader('Content-Type',"application/json");
+        xhr.send(data);
+
+        xhr.addEventListener('load', function(){
+            if(xhr.responseText){
+                alert('문의가 완료되었습니다. 최대한 빠르게 연락 드리겠습니다.');
+                sendMail(xhr.responseText);
+            }
+        });
+    })
+}
+
+function sendMail(info){
+    var template = JSON.parse(info);
+    console.log(template);
+    emailjs.send("service_ufxaalk", "template_rmqms6e", template,"user_Ry68wJ7hQ53fSlQDmlVtt").then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+        window.location.href = "/";
+    }, function(err) {
+        console.log('FAILED...', err);
     });
 }
 
