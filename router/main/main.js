@@ -87,7 +87,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
                 const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
-            const sql = `update ${menu} set name=?, content=?, tag=?, size=? where name=?`;
+            const sql = `update ${menu} set name='?', content=?, tag=?, size=? where name=?;`;
             var sqls = '';
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
@@ -137,7 +137,7 @@ router.post("/uploadText",function(req, res) {
                 const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
-            const sql = `update ${menu} set name=?, content=?, tag=?, size=? where name=?`;
+            const sql = `update ${menu} set name='?', content=?, tag=?, size=? where name=?;`;
             var sqls = '';
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
