@@ -9,23 +9,6 @@ window.onload = function(){
             $(".menu_list").css('display','none');
         }
     });
-    // checkAdmin();
-    const allMenu = document.querySelectorAll('.menu');
-    allMenu[0].classList.add('active');
-    getContent(allMenu[0].id);
-
-    for(var i=0; i<allMenu.length; i++){
-        allMenu[i].addEventListener('click', function(){
-            $("li[class='menu active']").attr('class','menu');
-            this.classList.add('active');
-            const menuId = this.id
-            if($(".menu-toggle").attr('expanded') === "true"){
-                $(".menu-toggle").attr('expanded','false');
-                $(".menu_list").css('display','none');
-            }
-            getContent(menuId);
-        })
-    }
 }
 
 //get main contents
@@ -455,6 +438,22 @@ function checkAdmin(){
             $(".admin_logout").css('display','none');
             $(".admin_login").css('display','');
             $("body").attr({oncontextmenu:'return false', ondragstart:'return false',onselectstart:'return false'});
+        }
+        const allMenu = document.querySelectorAll('.menu');
+        allMenu[0].classList.add('active');
+        getContent(allMenu[0].id);
+
+        for(var i=0; i<allMenu.length; i++){
+            allMenu[i].addEventListener('click', function(){
+                $("li[class='menu active']").attr('class','menu');
+                this.classList.add('active');
+                const menuId = this.id
+                if($(".menu-toggle").attr('expanded') === "true"){
+                    $(".menu-toggle").attr('expanded','false');
+                    $(".menu_list").css('display','none');
+                }
+                getContent(menuId);
+            })
         }
     });
 }
