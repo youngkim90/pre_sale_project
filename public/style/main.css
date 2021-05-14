@@ -384,6 +384,18 @@ input[name='content_img'], input[type='submit'] {
         font-size: 18px;
         top: 5px;
     }
+
+    .receptionForm {
+        margin: 0;
+        max-width: 90%;
+        position: relative;
+        padding: 20px;
+        background-color: #e0ffed;
+        height: 320px;
+        margin-bottom: 20px;
+        border: 2px solid #66c9c0;
+        border-radius: 5px;
+    }
 }
 
 .foot_list {
