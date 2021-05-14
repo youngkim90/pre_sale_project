@@ -326,6 +326,10 @@ input[name='content_img'], input[type='submit'] {
         display: inline-block;
         position: relative;
     }
+    .custInfo{
+        width: 250px;
+        height: 20px;
+    }
 
 }
 
@@ -422,6 +426,11 @@ input[name='content_img'], input[type='submit'] {
         border: 2px solid #66c9c0;
         border-radius: 5px;
     }
+
+    .contInput{
+        display: inline-block;
+        position: relative;
+    }
 }
 
 .foot_list {
@@ -489,10 +498,10 @@ input[name='content_img'], input[type='submit'] {
 /*    position: relative;*/
 /*}*/
 
-.custInfo{
-    width: 250px;
-    height: 20px;
-}
+/*.custInfo{*/
+/*    width: 250px;*/
+/*    height: 20px;*/
+/*}*/
 
 .agreeCheck, .agreeText{
     display: inline-block;
