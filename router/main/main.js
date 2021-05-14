@@ -86,7 +86,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
                 const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
-            for (var i = 0; i < rows.length; i++) {
+            for (var i = rows.length-1; i >= 0; i--) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
@@ -100,7 +100,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
                 content.content(menu, res);
             })
         }else {
-            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?)`, [num, fileName, 'IMG', size], function (err2, result) {
+            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, fileName, 'IMG', size], function (err2, result) {
                 if (err2) throw err2;
                 content.content(menu, res);
                 console.log('first insert complete');
@@ -129,7 +129,7 @@ router.post("/uploadText",function(req, res) {
                 const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
-            for (var i = 0; i < rows.length; i++) {
+            for (var i = rows.length-1; i >= 0; i--) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
@@ -143,7 +143,7 @@ router.post("/uploadText",function(req, res) {
                 console.log('insert complete');
             })
         }else {
-            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?)`, [num, data, tag, align], function (err2, result) {
+            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, data, tag, align], function (err2, result) {
                 if (err2) throw err2;
                 content.content(menu, res);
                 console.log('first insert complete');
