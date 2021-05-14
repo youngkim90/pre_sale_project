@@ -56,7 +56,7 @@ router.post('/update', function(req,res){
         data = data.split('\n').join('<br/>');
     }
 
-    db.query(`select * from ${menu} where name=?`, [num], function(err,rows) {
+    const query = db.query(`select * from ${menu} where name=?`, [num], function(err,rows) {
         if(err) throw err
         if(rows.length>0){
             const query = db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [num, data, tag, align, num], function (err2, result) {
@@ -78,7 +78,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
     const size = req.body.size;
     const fileName = req.file.filename;
 
-    db.query(`select * from ${menu}`, function(err,rows) {
+    const query = db.query(`select * from ${menu}`, function(err,rows) {
         if(err) throw err
         if(rows.length>0) {
             rows.sort(function (a, b) {
@@ -121,7 +121,7 @@ router.post("/uploadText",function(req, res) {
         data = data.split('\n').join('<br/>');
     }
 
-    db.query(`select * from ${menu}`, function(err,rows) {
+    const query = db.query(`select * from ${menu}`, function(err,rows) {
         if(err) throw err
         if(rows.length>0) {
             rows.sort(function (a, b) {
