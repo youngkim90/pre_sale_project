@@ -370,6 +370,20 @@ input[name='content_img'], input[type='submit'] {
     #menu_1 {
         border-left: none;
     }
+
+    .custInfo{
+        width: 200px;
+        height: 18px;
+    }
+
+    .contTitle {
+        display: inline-block;
+        position: relative;
+        width: 25%;
+        text-align: left;
+        font-size: 18px;
+        top: 5px;
+    }
 }
 
 .foot_list {
@@ -430,7 +444,6 @@ input[name='content_img'], input[type='submit'] {
     text-align: left;
     font-size: 19px;
     top: 5px;
-
 }
 
 .contInput{
