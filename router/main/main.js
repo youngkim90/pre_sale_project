@@ -88,7 +88,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
             });
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
-                    db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
+                    const query = db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
                         console.log('update complete')
                     })
@@ -100,7 +100,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
                 content.content(menu, res);
             })
         }else {
-            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, fileName, 'IMG', size], function (err2, result) {
+            const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, fileName, 'IMG', size], function (err2, result) {
                 if (err2) throw err2;
                 content.content(menu, res);
                 console.log('first insert complete');
@@ -131,19 +131,19 @@ router.post("/uploadText",function(req, res) {
             });
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
-                    db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
+                    const query =db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
                         console.log('update complete')
                     })
                 }
             }
-            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, data, tag, align], function (err2, result) {
+            const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, data, tag, align], function (err2, result) {
                 if(err2) throw err2;
                 content.content(menu, res);
                 console.log('insert complete');
             })
         }else {
-            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, data, tag, align], function (err2, result) {
+            const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, data, tag, align], function (err2, result) {
                 if (err2) throw err2;
                 content.content(menu, res);
                 console.log('first insert complete');
@@ -158,7 +158,7 @@ router.post('/remove', function(req,res){
     const remNum = req.body.remNum;
     var filePath = __dirname
 
-    db.query(`select * from ${remName}`, function(err,rows) {
+    const query = db.query(`select * from ${remName}`, function(err,rows) {
         if (err) throw err
         if (rows.length > 0) {
             rows.sort(function (a, b) {
@@ -166,7 +166,7 @@ router.post('/remove', function(req,res){
                 const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
-            db.query(`select*from ${remName} where name=?`, [remNum], function (err, result) {
+            const query = db.query(`select*from ${remName} where name=?`, [remNum], function (err, result) {
                 if (err) throw err;
                 filePath =`/home/hosting_users/youngkim90/apps/youngkim90_marinacube/public/images/${remName}/${result[0].content}`;
                 fs.unlink(filePath, function(error){
@@ -174,20 +174,20 @@ router.post('/remove', function(req,res){
                     console.log('file remove complete');
                 });
             });
-            db.query(`delete from ${remName} where name=?`, [remNum], function (err2, result) {
+            const query2 = db.query(`delete from ${remName} where name=?`, [remNum], function (err2, result) {
                 if (err2) throw err2;
                 console.log('remove complete');
             });
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) > Number(remNum)) {
-                    db.query(`update ${remName} set name=? where name=?`, [Number(rows[i].name) - 1, rows[i].name], function (err2, result) {
+                    const query = db.query(`update ${remName} set name=? where name=?`, [Number(rows[i].name) - 1, rows[i].name], function (err2, result) {
                         if (err2) throw err2;
                         console.log('update complete')
                     })
                 }
             }
 
-            db.query(`select * from ${remName} where name=?`, ['1'], function (err2, result) {
+            const query3 = db.query(`select * from ${remName} where name=?`, ['1'], function (err2, result) {
                 if(err2) throw err2;
                 content.content(remName, res);
             })
@@ -212,7 +212,7 @@ router.post('/question', function(req,res) {
         quest = quest.split('\n').join('<br/>');
     }
 
-    db.query(`insert into question (name,phone,quest) values (?,?,?)`, [custName,custPhone,quest], function (err, result) {
+    const query = db.query(`insert into question (name,phone,quest) values (?,?,?)`, [custName,custPhone,quest], function (err, result) {
         if(err) return err;
         res.json(emailData);
     });
