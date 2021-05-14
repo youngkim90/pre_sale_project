@@ -330,6 +330,12 @@ input[name='content_img'], input[type='submit'] {
         width: 250px;
         height: 20px;
     }
+    .questArea {
+        position: relative;
+        top: 30px;
+        resize: none;
+        width: 260px;
+    }
 
 }
 
@@ -417,7 +423,7 @@ input[name='content_img'], input[type='submit'] {
 
     .receptionForm {
         margin: 0;
-        max-width: 90%;
+        max-width: 100%;
         position: relative;
         padding: 10px;
         background-color: #e0ffed;
@@ -430,6 +436,12 @@ input[name='content_img'], input[type='submit'] {
     .contInput{
         display: inline-block;
         position: relative;
+    }
+    .questArea {
+        position: relative;
+        top: 30px;
+        resize: none;
+        width: 220px;
     }
 }
 
@@ -536,8 +548,8 @@ input[name='content_img'], input[type='submit'] {
     border-color: grey;
 }
 
-.questArea {
-    position: relative;
-    top: 30px;
-    resize: none;
-}
+/*.questArea {*/
+/*    position: relative;*/
+/*    top: 30px;*/
+/*    resize: none;*/
+/*}*/
