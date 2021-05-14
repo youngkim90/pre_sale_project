@@ -301,6 +301,32 @@ input[name='content_img'], input[type='submit'] {
     .main-navigation ul {
         display: block;
     }
+    .receptionForm {
+        margin: 0;
+        max-width: 90%;
+        position: relative;
+        padding: 30px;
+        background-color: #e0ffed;
+        height: 320px;
+        margin-bottom: 20px;
+        border: 2px solid #66c9c0;
+        border-radius: 5px;
+    }
+
+    .contTitle {
+        display: inline-block;
+        position: relative;
+        width: 30%;
+        text-align: left;
+        font-size: 19px;
+        top: 5px;
+    }
+
+    .contInput{
+        display: inline-block;
+        position: relative;
+    }
+
 }
 
 @media only screen and (max-width:767px) {
@@ -389,7 +415,7 @@ input[name='content_img'], input[type='submit'] {
         margin: 0;
         max-width: 90%;
         position: relative;
-        padding: 20px;
+        padding: 10px;
         background-color: #e0ffed;
         height: 320px;
         margin-bottom: 20px;
@@ -437,31 +463,31 @@ input[name='content_img'], input[type='submit'] {
     display: block;
 }
 
-.receptionForm {
-    margin: 0;
-    max-width: 90%;
-    position: relative;
-    padding: 30px;
-    background-color: #e0ffed;
-    height: 320px;
-    margin-bottom: 20px;
-    border: 2px solid #66c9c0;
-    border-radius: 5px;
-}
+/*.receptionForm {*/
+/*    margin: 0;*/
+/*    max-width: 90%;*/
+/*    position: relative;*/
+/*    padding: 30px;*/
+/*    background-color: #e0ffed;*/
+/*    height: 320px;*/
+/*    margin-bottom: 20px;*/
+/*    border: 2px solid #66c9c0;*/
+/*    border-radius: 5px;*/
+/*}*/
 
-.contTitle {
-    display: inline-block;
-    position: relative;
-    width: 30%;
-    text-align: left;
-    font-size: 19px;
-    top: 5px;
-}
+/*.contTitle {*/
+/*    display: inline-block;*/
+/*    position: relative;*/
+/*    width: 30%;*/
+/*    text-align: left;*/
+/*    font-size: 19px;*/
+/*    top: 5px;*/
+/*}*/
 
-.contInput{
-    display: inline-block;
-    position: relative;
-}
+/*.contInput{*/
+/*    display: inline-block;*/
+/*    position: relative;*/
+/*}*/
 
 .custInfo{
     width: 250px;
