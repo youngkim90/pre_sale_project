@@ -441,7 +441,7 @@ input[name='content_img'], input[type='submit'] {
         position: relative;
         top: 30px;
         resize: none;
-        width: 220px;
+        width: 240px;
     }
 }
 

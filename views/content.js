@@ -30,7 +30,7 @@ module.exports = {
                 <div class="contInput"><input type="text" class="custInfo" id="info1"></input></div></div></br>             
                 <div><div class="contTitle">연락처<span style="color:red">*</span></div>
                 <div class="contInput"><input type="text" class="custInfo" id="info2"></div></div>   </br>             
-                <div style="left:2%;position:relative;"><div class="contTitle">문의사항<span style="color:red">*</span></div>
+                <div style="position:relative;"><div class="contTitle">문의사항<span style="color:red">*</span></div>
                 <div class="contInput"><textarea class="questArea" id="info3" rows="5"></textarea></div></br>
                 
                 <div style="top:50px;position:relative;"><div class="agreeCheck"><input type="checkbox" id="agreeChk" name="custAgree"></div>
