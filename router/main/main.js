@@ -141,7 +141,7 @@ router.post("/uploadText",function(req, res) {
             var sqls = '';
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
-                    const updateArr = [Number(rows[i].name)+1,rows[i].content, rows[i].tag, rows[i].size, rows[i].name];
+                    const updateArr = [Number(rows[i].name)+1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name];
                     sqls += mysql.format(sql,updateArr);
                 }
             }
