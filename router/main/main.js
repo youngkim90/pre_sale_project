@@ -92,7 +92,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     const updateArr = [Number(rows[i].name)+1,rows[i].content, rows[i].tag, rows[i].size, rows[i].name];
-                    sqls = mysql.format(sql,updateArr);
+                    sqls += mysql.format(sql,updateArr);
                     console.log(updateArr);
                 }
             }
@@ -142,7 +142,7 @@ router.post("/uploadText",function(req, res) {
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     const updateArr = [Number(rows[i].name)+1,rows[i].content, rows[i].tag, rows[i].size, rows[i].name];
-                    sqls = mysql.format(sql,updateArr);
+                    sqls += mysql.format(sql,updateArr);
                 }
             }
             if(sqls) {
