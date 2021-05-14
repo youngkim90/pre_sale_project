@@ -100,7 +100,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
                 content.content(menu, res);
             })
         }else {
-            db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, fileName, 'IMG'], function (err2, result) {
+            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?)`, [num, fileName, 'IMG', size], function (err2, result) {
                 if (err2) throw err2;
                 content.content(menu, res);
                 console.log('first insert complete');
@@ -125,8 +125,8 @@ router.post("/uploadText",function(req, res) {
         if(err) throw err
         if(rows.length>0) {
             rows.sort(function (a, b) {
-                const numA = a.name;
-                const numB = b.name;
+                const numA = Number(a.name);
+                const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
             for (var i = 0; i < rows.length; i++) {
@@ -143,7 +143,7 @@ router.post("/uploadText",function(req, res) {
                 console.log('insert complete');
             })
         }else {
-            db.query(`insert into ${menu} (name, content, tag) values (?,?,?)`, [num, data, tag], function (err2, result) {
+            db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?)`, [num, data, tag, align], function (err2, result) {
                 if (err2) throw err2;
                 content.content(menu, res);
                 console.log('first insert complete');
@@ -162,8 +162,8 @@ router.post('/remove', function(req,res){
         if (err) throw err
         if (rows.length > 0) {
             rows.sort(function (a, b) {
-                const numA = a.name;
-                const numB = b.name;
+                const numA = Number(a.name);
+                const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
             db.query(`select*from ${remName} where name=?`, [remNum], function (err, result) {
