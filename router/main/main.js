@@ -86,6 +86,10 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
                 const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
+            const query2 = db.query(`select * from ${menu} where name=?`, [Number(num)], function (err2, result) {
+                if (err2) throw err2;
+                console.log('remove complete');
+            });
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     const query = db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
@@ -129,12 +133,16 @@ router.post("/uploadText",function(req, res) {
                 const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
+            const query2 = db.query(`select * from ${menu} where name=?`, [Number(num)], function (err2, result) {
+                if (err2) throw err2;
+                console.log('remove complete');
+            });
             for (var i = 0; i < rows.length; i++) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     const query =db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
                         console.log('update complete')
-                    })
+                    });
                 }
             }
             const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, data, tag, align], function (err2, result) {
