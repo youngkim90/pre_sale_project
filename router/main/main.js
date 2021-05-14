@@ -93,6 +93,7 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     const updateArr = [Number(rows[i].name)+1,rows[i].content, rows[i].tag, rows[i].size, rows[i].name];
                     sqls = mysql.format(sql,updateArr);
+                    console.log(updateArr);
                 }
             }
             if(sqls) {
@@ -109,8 +110,8 @@ router.post("/uploadImg", upload.single("content_img"),function(req, res) {
         }else {
             const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [num, fileName, 'IMG', size], function (err2, result) {
                 if (err2) throw err2;
-                content.content(menu, res);
                 console.log('first insert complete');
+                content.content(menu, res);
             })
         }
     });
@@ -148,6 +149,7 @@ router.post("/uploadText",function(req, res) {
                 const query = db.query(sqls, function (err2, result) {
                     if (err2) throw err2;
                     console.log('update complete')
+                    console.log(sqls);
                 });
             }
             const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, data, tag, align], function (err2, result) {

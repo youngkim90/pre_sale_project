@@ -37,12 +37,10 @@ router.post('/chkAdmin', function(req, res){
 });
 
 passport.serializeUser(function(user,done){
-    console.log('ser= '+ user[0])
     done(null, user.id);
 })
 
 passport.deserializeUser(function(id,done){
-    console.log('deser= '+ id)
     done(null, id);
 })
 
