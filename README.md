@@ -21,11 +21,16 @@ http://반달섬마리나큐브.org/
 
 
 <h3>기능</h3>
+
+
 ![image](https://user-images.githubusercontent.com/47030781/118357953-8e8a4100-b5b7-11eb-9094-dc72a42f073c.png)
+![image](https://user-images.githubusercontent.com/47030781/118358146-7ff05980-b5b8-11eb-85d0-31b153fcdfe7.png)
+![image](https://user-images.githubusercontent.com/47030781/118358154-8a125800-b5b8-11eb-9ef9-81de6558a6b0.png)
+![image](https://user-images.githubusercontent.com/47030781/118358348-508e1c80-b5b9-11eb-9659-332d4cca34d9.png)
+
 <br><br>
 
-
-후기
+<h3>후기</h3>
 - NodeJS의 라이브러리 활용법과 DB Connect 방식에 대해서 공부할 수 있었다.
 - NodeJS의 모듈 관리와 RequireJS 기능을 통한 모듈 활용법을 통해 NodeJS의 장점을 터득할 수 있었다. 
 - 자바스크립트 객체를 활용한 MySQL의 다중쿼리에 대해 공부할 수 있었다.
