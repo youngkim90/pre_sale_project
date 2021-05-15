@@ -1,22 +1,33 @@
-# pre_sale_project
-Homepage for pre sale
+<h1>분양 홈페이지 제작 <br>
+Homepage for pre sale<h1>
 
-개인공부겸 지인의 부탁으로 간단한 분양 홈페이지 구축 프로젝트를 진행하였다.
+<h3>개인공부겸 지인의 부탁으로 간단한 분양 홈페이지 구축 프로젝트를 진행</h3>
+<br><br>
 
 
-특징
+<h3>특징</h3>
 - 자바스크립트와 NodeJS를 활용하여 개발하는 것을 목표로 제작
 - emailjs, express, passportjs, router 등의 외부 모듈을 활용하여 제작
 - XMLHttpRequest 기능을 적극 활용하여 비동기 방식의 SPA형태로 제작
 - mysql을 활용하여 관리자, 게시물에 대한 간단한 DB Schema 구축
 - 관리자 모드에서 이미지, 텍스트에 대한 CRUD 기능 추가
 - 모바일에서도 화면에 불편함이 없도록 반응형으로 제작
+<br><br>
 
 
-사이트주소
+</h3>사이트주소</h3>
 http://반달섬마리나큐브.org/
+<br><br>
 
+
+<h3>기능</h3>
 ![image](https://user-images.githubusercontent.com/47030781/118357953-8e8a4100-b5b7-11eb-9094-dc72a42f073c.png)
+![image](https://user-images.githubusercontent.com/47030781/118358132-6bac5c80-b5b8-11eb-9997-32dbc19e27a7.png)
+![image](https://user-images.githubusercontent.com/47030781/118358146-7ff05980-b5b8-11eb-85d0-31b153fcdfe7.png)
+![image](https://user-images.githubusercontent.com/47030781/118358154-8a125800-b5b8-11eb-9ef9-81de6558a6b0.png)
+![image](https://user-images.githubusercontent.com/47030781/118358185-a6ae9000-b5b8-11eb-998a-c8fdde547357.png)
+<br><br>
+
 
 후기
 - NodeJS의 라이브러리 활용법과 DB Connect 방식에 대해서 공부할 수 있었다.
