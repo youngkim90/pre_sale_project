@@ -35,3 +35,8 @@
 - 자바스크립트 객체를 활용한 MySQL의 다중쿼리에 대해 공부할 수 있었다.<br>
 - 반응형 웹으로 만들기 위해 CSS의 @media 속성을 활용해 볼 수 있는 좋은 기회였다.<br>
 - JSON 형태의 데이터를 활용한 비동기 방식 요청으로 Single Page Application을 만들어보는 좋은 경험이였다. 
+<br><br>
+
+<h3>참조자료</h3>
+- https://www.inflearn.com/course/web2-node-js-mysql (강사: Egoing Lee)
+- https://www.inflearn.com/course/node-js-%EC%9B%B9%EA%B0%9C%EB%B0%9C (강사: 윤지수)
