@@ -38,5 +38,5 @@
 <br><br>
 
 <h3>참조자료</h3>
-- https://www.inflearn.com/course/web2-node-js-mysql (강사: Egoing Lee) <
+- https://www.inflearn.com/course/web2-node-js-mysql (강사: Egoing Lee) <br>
 - https://www.inflearn.com/course/node-js-%EC%9B%B9%EA%B0%9C%EB%B0%9C (강사: 윤지수)
