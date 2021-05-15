@@ -21,8 +21,7 @@ http://반달섬마리나큐브.org/
 
 
 <h3>기능</h3>
-![image](https://user-images.githubusercontent.com/47030781/118357953-8e8a4100-b5b7-11eb-9094-dc72a42f073c.png)<br>
-![image](https://user-images.githubusercontent.com/47030781/118358132-6bac5c80-b5b8-11eb-9997-32dbc19e27a7.png)
+![image](https://user-images.githubusercontent.com/47030781/118357953-8e8a4100-b5b7-11eb-9094-dc72a42f073c.png)
 <br><br>
 
 
