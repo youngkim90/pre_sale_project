@@ -15,8 +15,8 @@ Homepage for pre sale<h1>
 <br><br>
 
 
-</h3>사이트주소</h3>
-http://반달섬마리나큐브.org/
+</h3>사이트주소</h3><br>
+<a src="http://반달섬마리나큐브.org">http://반달섬마리나큐브.org</a>
 <br><br>
 
 
