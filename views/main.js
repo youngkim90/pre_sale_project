@@ -497,6 +497,7 @@ function getFooter(){
             footMenu[i].addEventListener('click', function(){
                 var menuId = this.id
                 menuId = menuId.replace('footmenu','menu');
+                $("li.active").attr('class','menu');
                 document.querySelector('#'+menuId).classList.add('active');
                 getContent(menuId);
             })
