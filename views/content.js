@@ -85,6 +85,7 @@ module.exports = {
                         <li class="footMenu" id="footmenu_7"><a href="javascript:void(0)">주변입지</a></li>
                     </ul>
                     <p class="footMark">반달섬 마리나 큐브 대표번호 1877-7449 Copyright © All rights reserved.</p>
+                    <p class="footMark"> Hosting by cafe24 | MADE BY 김영완</p>
                     <div class="admin_login"><a href="./join">관리자</a></div>
                     <div class="admin_logout"><a href="./join">로그아웃</a></div>
         `;
