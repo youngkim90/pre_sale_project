@@ -30,7 +30,7 @@
 <br><br>
 
 <h3>후기</h3>
-- NodeJS의 라이브러리 활용법과 DB Connect 방식에 대해서 공부할 수 있었다.<br>
+- NodeJS의 라이브러리 활용법과 비동기 DB Connect 방식에 대해서 공부할 수 있었다.<br>
 - NodeJS의 모듈 관리와 RequireJS 기능을 통한 모듈 활용법을 통해 NodeJS의 장점을 터득할 수 있었다. <br>
 - 자바스크립트 객체를 활용한 MySQL의 다중쿼리에 대해 공부할 수 있었다.<br>
 - 반응형 웹으로 만들기 위해 CSS의 @media 속성을 활용해 볼 수 있는 좋은 기회였다.<br>
