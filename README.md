@@ -5,8 +5,8 @@
 
 
 <h3>특징</h3>
-- 자바스크립트와 NodeJS를 활용하여 개발하는 것을 목표로 제작<br>
-- emailjs, express, passportjs, router 등의 외부 모듈을 활용하여 제작<br>
+- 자바스크립트와 제이쿼리를 사용하여 NodeJS환경에서 express를 활용하여 개발하는 것을 목표로 제작<br>
+- emailjs, passportjs, router 등의 외부 모듈과 미들웨어를 활용하여 제작<br>
 - XMLHttpRequest 기능을 적극 활용하여 비동기 방식의 SPA형태로 제작<br>
 - mysql을 활용하여 관리자, 게시물에 대한 간단한 DB Schema 구축<br>
 - 관리자 모드에서 이미지, 텍스트에 대한 CRUD 기능 추가<br>
