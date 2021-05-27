@@ -500,6 +500,7 @@ function getFooter(){
                 $("li.active").attr('class','menu');
                 document.querySelector('#'+menuId).classList.add('active');
                 getContent(menuId);
+                window.scrollTo(0,0);
             })
         }
         checkAdmin();
