@@ -453,12 +453,14 @@ function checkAdmin(){
     });
 }
 
+//비동기 방식으로 컨텐츠 호출
 function sendAjax(url, data, type){
     var xhr = new XMLHttpRequest();
     xhr.open("POST" , url );
     if(type=='text') xhr.setRequestHeader('Content-Type',"application/json");
-    xhr.send(data);
+    xhr.send(data); //서버로 요청
 
+    //서버에서 응답이 왔을 때 이벤트 발생
     xhr.addEventListener('load', function(){
         const main_content = document.querySelector('.main-content');
         main_content.innerHTML = xhr.responseText;

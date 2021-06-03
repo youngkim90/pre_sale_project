@@ -117,19 +117,24 @@ router.post("/uploadText",function(req, res) {
     const align = req.body.align;
     const menu = rowNum.split("-")[0];
     const num = rowNum.split("-")[1];
+
+    //text 줄바꿈 요소를 html 태그로 변경
     if(data.indexOf('\n')!=-1){
         data = data.split('\n').join('<br/>');
     }
-
+    //해당 테이블의 Content 데이터 호출
     const query = db.query(`select * from ${menu}`, function(err,rows) {
         if(err) throw err
         if(rows.length>0) {
+            //content name 순으로 정렬
             rows.sort(function (a, b) {
                 const numA = Number(a.name);
                 const numB = Number(b.name);
                 return numA < numB ? -1 : numA > numB ? 1 : 0;
             });
+
             for (var i = rows.length-1; i >= 0; i--) {
+                //Content 요소들 중간에 추가할 경우 뒤의 Content 들은 name이 1씩 증가
                 if (Number(rows[i].name) >= (Number(num) + 1)) {
                     const query =db.query(`update ${menu} set name=?, content=?, tag=?, size=? where name=?`, [Number(rows[i].name) + 1, rows[i].content, rows[i].tag, rows[i].size, rows[i].name], function (err2, result) {
                         if(err2) throw err2;
@@ -137,6 +142,8 @@ router.post("/uploadText",function(req, res) {
                     });
                 }
             }
+
+            //추가할 Content 테이블에 삽입
             const query = db.query(`insert into ${menu} (name, content, tag, size) values (?,?,?,?)`, [Number(num)+1, data, tag, align], function (err2, result) {
                 if(err2) throw err2;
                 content.content(menu, res);
