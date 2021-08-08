@@ -27,6 +27,27 @@ function getContent(data) {
             if (xhr.responseText != 'nodata') {
                 const main_content = document.querySelector('.main-content');
                 main_content.innerHTML = xhr.responseText;
+                if($("li[class='menu active']")[0].id == 'menu_1'){
+                    const contact = `
+                        <div class="imgContent">
+                            <img src="./images/content4/고객접수.png" style="max-width:90%"></img>
+                        </div>
+                        <form class="receptionForm">
+                            <div><div class="contTitle">성함<span style="color:red">*</span></div>
+                            <div class="contInput"><input type="text" class="custInfo" id="info1"></input></div></div></br>             
+                            <div><div class="contTitle">연락처<span style="color:red">*</span></div>
+                            <div class="contInput"><input type="text" class="custInfo" id="info2"></div></div></br>             
+                            <div style="position:relative;"><div class="contTitle">문의사항<span style="color:red">*</span></div>
+                            <div class="contInput"><textarea class="questArea" id="info3" rows="5"></textarea></div></br>
+                            
+                            <div style="top:50px;position:relative;"><div class="agreeCheck"><input type="checkbox" id="agreeChk" name="custAgree"></div>
+                            <div class="agreeText">개인정보 수집 및 이용 동의 </div></div></br>
+                            
+                            <div class="submit_btn">문의하기</div>
+                        </form>
+                    `;
+                    main_content.innerHTML(xhr.responseText + contact)
+                }
                 if ($("input[name='adCheck']").length > 0 && $("input[name='adCheck']")[0].value == 'checked') {
                     addEventsForContent();
                 } else {
