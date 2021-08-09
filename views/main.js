@@ -46,7 +46,7 @@ function getContent(data) {
                             <div class="submit_btn">문의하기</div>
                         </form>
                     `;
-                    main_content.innerHTML(xhr.responseText + contact)
+                    main_content.innerHTML(xhr.responseText + contact);
                 }
                 if ($("input[name='adCheck']").length > 0 && $("input[name='adCheck']")[0].value == 'checked') {
                     addEventsForContent();
