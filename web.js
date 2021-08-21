@@ -5,7 +5,7 @@ const web = express();
 const path = require('path');
 const cors = require('cors');
 const router = require('./router/index');
-const PORT = 8002
+const PORT = 8001
 
 
 //login session
