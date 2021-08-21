@@ -47,7 +47,7 @@ function getContent(data) {
                         </form>
                     `;
                     main_content.innerHtml = "";
-                    main_content.innerHTML = xhr.responseText + contact;
+                    addEventsForCustReception(xhr.responseText + contact);
                 }
                 if ($("input[name='adCheck']").length > 0 && $("input[name='adCheck']")[0].value == 'checked') {
                     addEventsForContent();
