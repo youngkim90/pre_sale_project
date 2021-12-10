@@ -15,7 +15,7 @@
 
 
 <h3>사이트주소</h3>
-<a href="http://반달섬마리나큐브.org" target="_blank">http://반달섬마리나큐브.org</a>
+<a href="http://반달섬마리나큐브.org" target="_blank">http://분양홍보관1877-7449.com</a>
 <br><br>
 
 
